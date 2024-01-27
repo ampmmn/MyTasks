@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="gui">
+      <UniqueIdentifier>{b34b5f56-4a50-4bad-9527-44f4c115ca85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility">
+      <UniqueIdentifier>{59e05396-79cc-4275-b688-6d23353f4c7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app">
+      <UniqueIdentifier>{20dc2d3a-f11b-4346-a440-32bf84fe3b6b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MyTasks.h">
+      <Filter>app</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\SharedHwnd.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\MyTasksDialog.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\TaskTray.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="app\AppPreference.h">
+      <Filter>app</Filter>
+    </ClInclude>
+    <ClInclude Include="app\AppPreferenceListenerIF.h">
+      <Filter>app</Filter>
+    </ClInclude>
+    <ClInclude Include="app\Settings.h">
+      <Filter>app</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\AboutDialog.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\SectionDialog.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\Accessibility.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\ScopeAttachThreadInput.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MyTasks.cpp">
+      <Filter>app</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\MyTasksDialog.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\TaskTray.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="app\AppPreference.cpp">
+      <Filter>app</Filter>
+    </ClCompile>
+    <ClCompile Include="app\Settings.cpp">
+      <Filter>app</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\AboutDialog.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\SectionDialog.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="utility\Accessibility.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MyTasks.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\MyTasks.rc2">
+      <Filter>リソース ファイル</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\MyTasks.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="res\icon1.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="res\tasktray.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

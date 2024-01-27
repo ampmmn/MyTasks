@@ -1,0 +1,14 @@
+.vs
+x64
+Release/
+Debug/
+coverage_report
+*.aps
+*.user
+*.obj
+*.pch
+*.tlog
+*.lastupdate
+*.bak
+doc/help.html
+json/
