@@ -1,0 +1,50 @@
+@startuml{Task.svg}
+
+class Project
+class Thema
+
+class Category
+
+class Task
+class WorkItem
+
+
+Thema -up-> Project
+Task -up-> Thema
+Task -up-> Category
+
+WorkItem -up-> Task
+
+note right of Project
+タスクのグループ
+期間(開始日/終了日)の情報を持つ
+end note
+
+note right of Thema
+作業のテーマ
+例えば、要件であったりバグであったりとか、
+1テーマ複数タスクの場合もあるし、ものによっては1テーマ1タスクの場合もあるかも
+
+end note
+
+note right of Task
+タスクの情報
+タスクの件名、どのプロジェクトの作業か、などの情報を持つ
+end note
+
+note right of WorkItem
+タスク実行情報
+開始時刻/終了時刻/完了状態などの情報を持つ
+実行してるタスクの情報はTask側が持つ
+
+例えば、同一作業を一度中断して、あとで再開して完了、みたいな形で2回に分けて実行した場合、
+同じTaskを共有するWorkItemが2つある、みたいな形になる
+end note
+
+note left of Category
+作業分類を表す。必要に応じて設定する
+例:打合せ、調査、ドキュメンテーション、コーディング、テスト実施・・
+end note
+
+@enduml
+

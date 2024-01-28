@@ -75,6 +75,15 @@
     <ClInclude Include="core\Section.h">
       <Filter>core</Filter>
     </ClInclude>
+    <ClInclude Include="gui\DateSelectDialog.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Task.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\WorkItem.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -105,6 +114,15 @@
       <Filter>utility</Filter>
     </ClCompile>
     <ClCompile Include="core\Section.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\DateSelectDialog.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Task.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\WorkItem.cpp">
       <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>

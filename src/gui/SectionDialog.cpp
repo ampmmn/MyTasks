@@ -44,6 +44,7 @@ void SectionDialog::PImpl::ConvertSections(std::vector<Section>& sections)
 
 	Section section;
 	// 区分Aをセット
+	section.SetDisplayName(_T("A"));
 	isOK = section.SetStartTime(mStartTime);
 	isOK = section.SetEndTime(mEndTimeA);
 
@@ -54,6 +55,7 @@ void SectionDialog::PImpl::ConvertSections(std::vector<Section>& sections)
 	}
 
 	// 区分B
+	section.SetDisplayName(_T("B"));
 	isOK = section.SetStartTime(mEndTimeA);
 	isOK = section.SetEndTime(mEndTimeB);
 	sections.push_back(section);
@@ -62,6 +64,7 @@ void SectionDialog::PImpl::ConvertSections(std::vector<Section>& sections)
 		return ;
 	}
 	// 区分C
+	section.SetDisplayName(_T("C"));
 	isOK = section.SetStartTime(mEndTimeB);
 	isOK = section.SetEndTime(mEndTimeC);
 	sections.push_back(section);
@@ -70,6 +73,7 @@ void SectionDialog::PImpl::ConvertSections(std::vector<Section>& sections)
 		return ;
 	}
 	// 区分D
+	section.SetDisplayName(_T("D"));
 	isOK = section.SetStartTime(mEndTimeC);
 	isOK = section.SetEndTime(mEndTimeD);
 	sections.push_back(section);
@@ -78,6 +82,7 @@ void SectionDialog::PImpl::ConvertSections(std::vector<Section>& sections)
 		return ;
 	}
 	// 区分E
+	section.SetDisplayName(_T("E"));
 	isOK = section.SetStartTime(mEndTimeD);
 	isOK = section.SetEndTime(mEndTimeE);
 	sections.push_back(section);
@@ -86,6 +91,7 @@ void SectionDialog::PImpl::ConvertSections(std::vector<Section>& sections)
 		return ;
 	}
 	// 区分F
+	section.SetDisplayName(_T("F"));
 	isOK = section.SetStartTime(mEndTimeE);
 	isOK = section.SetEndTime(mEndTimeF);
 	sections.push_back(section);
@@ -94,6 +100,7 @@ void SectionDialog::PImpl::ConvertSections(std::vector<Section>& sections)
 		return ;
 	}
 	// 区分G
+	section.SetDisplayName(_T("G"));
 	isOK = section.SetStartTime(mEndTimeF);
 	isOK = section.SetEndTime(mEndTimeG);
 	sections.push_back(section);
@@ -102,6 +109,7 @@ void SectionDialog::PImpl::ConvertSections(std::vector<Section>& sections)
 		return ;
 	}
 	// 区分H
+	section.SetDisplayName(_T("H"));
 	isOK = section.SetStartTime(mEndTimeG);
 	isOK = section.SetEndTime(mEndTimeH);
 	sections.push_back(section);

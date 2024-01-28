@@ -19,6 +19,10 @@ public:
 	void OnContextMenu(CWnd* pWnd, CPoint pos);
 
 	void RedrawTasks();
+	void UpdateDate();
+	void UpdateTimeSection();
+
+	void ShowHelp();
 
 // ダイアログ データ
 	protected:
@@ -32,6 +36,9 @@ protected:
 
 	// 生成された、メッセージ割り当て関数
 	virtual BOOL OnInitDialog();
+	virtual void OnOK();
+	virtual void OnCancel();
+	afx_msg void OnTimer(UINT_PTR timerId);
 	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();

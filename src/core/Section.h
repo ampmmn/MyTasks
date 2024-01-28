@@ -16,11 +16,18 @@ public:
 	int GetEndHour() const;
 	int GetEndMinute() const;
 
+	// 指定された時間tmと開始時刻の差を分単位で求める
+	void GetStartTimespan(CTime tm, int& minutes);
+	void GetEndTimespan(CTime tm, int& minutes);
+
 	CString ToStringStartTime();
 	CString ToStringEndTime();
 
 	bool SetStartTime(const CString& strExpr);
 	bool SetEndTime(const CString& strExpr);
+
+	void SetDisplayName(const CString& name);
+	const CString& GetDisplayName() const;
 
 	static bool ParseStringExpression(const CString& str, int& time);
 

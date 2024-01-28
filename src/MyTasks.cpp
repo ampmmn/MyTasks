@@ -96,7 +96,8 @@ BOOL MyTasksApp::InitFirstInstance()
 	InitCtrls.dwSize = sizeof(InitCtrls);
 	// アプリケーションで使用するすべてのコモン コントロール クラスを含めるには、
 	// これを設定します。
-	InitCtrls.dwICC = ICC_WIN95_CLASSES;
+	//InitCtrls.dwICC = ICC_WIN95_CLASSES;
+	InitCtrls.dwICC = ICC_DATE_CLASSES | ICC_STANDARD_CLASSES;
 	InitCommonControlsEx(&InitCtrls);
 
 	CWinApp::InitInstance();
@@ -113,7 +114,16 @@ BOOL MyTasksApp::InitFirstInstance()
 
 	MyTasksDialog dlg;
 	m_pMainWnd = &dlg;
-	dlg.DoModal();
+
+	try {
+		mTaskTray.reset(new TaskTray(&dlg));
+		mTaskTray->Create();
+
+		dlg.DoModal();
+	}
+	catch(...) {
+		mTaskTray.reset();
+	}
 
 #if !defined(_AFXDLL) && !defined(_AFX_NO_MFC_CONTROLS_IN_DIALOGS)
 	ControlBarCleanUp();

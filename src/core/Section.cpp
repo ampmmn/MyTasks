@@ -50,6 +50,22 @@ int Section::GetEndMinute() const
 	return mEndMinute;
 }
 
+// 指定された時間tmと開始時刻の差を分単位で求める
+void Section::GetStartTimespan(CTime tm, int& minutes)
+{
+	CTime tmStart(tm.GetYear(), tm.GetMonth(), tm.GetDay(), mStartHour, mStartMinute, 0);
+
+	CTimeSpan span = tmStart - tm;
+	minutes = (int)span.GetTotalMinutes();
+}
+
+void Section::GetEndTimespan(CTime tm, int& minutes)
+{
+	CTime tmEnd(tm.GetYear(), tm.GetMonth(), tm.GetDay(), mEndHour, mEndMinute, 0);
+
+	CTimeSpan span = tmEnd - tm;
+	minutes = (int)span.GetTotalMinutes();
+}
 	
 CString Section::ToStringStartTime()
 {
@@ -89,6 +105,17 @@ bool Section::SetEndTime(const CString& strExpr)
 	mEndMinute = timeVal - m;
 
 	return true;
+}
+
+void Section::SetDisplayName(const CString& name)
+{
+	mDisplayName = name;
+}
+
+
+const CString& Section::GetDisplayName() const
+{
+	return mDisplayName;
 }
 
 bool Section::ParseStringExpression(const CString& str, int& time)
