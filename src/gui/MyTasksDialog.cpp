@@ -9,6 +9,7 @@
 #include "gui/AboutDialog.h"
 #include "gui/SectionDialog.h"
 #include "gui/DateSelectDialog.h"
+#include "gui/ProjectListDialog.h"
 
 #include "core/Section.h"
 
@@ -42,6 +43,8 @@ struct MyTasksDialog::PImpl
 
 	// 完了タスクを表示するか?
 	bool mIsShowCompletedTasks;
+	// 時間の表示単位を0.1h単位にする
+	bool mIsShowTimeUnitAsHours;
 
 	// 次のセクションまでの残り時間案内
 	CString mNextSectionGuide;
@@ -52,6 +55,7 @@ MyTasksDialog::MyTasksDialog(CWnd* pParent /*=nullptr*/)
 {
 	in->m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	in->mIsShowCompletedTasks = true;
+	in->mIsShowTimeUnitAsHours = false;
 }
 
 MyTasksDialog::~MyTasksDialog()
@@ -87,8 +91,11 @@ BEGIN_MESSAGE_MAP(MyTasksDialog, CDialogEx)
 	ON_COMMAND(ID_DATE_JUMP, OnDateJump)
 	ON_COMMAND(ID_VIEW_HIDEDONETASKS, OnViewHideCompletedTasks)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_HIDEDONETASKS, OnUpdateViewHideCompletedTasks)
+	ON_COMMAND(ID_VIEW_TIMEUNIT, OnViewTimeUnit)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_TIMEUNIT, OnUpdateViewTimeUnit)
 	ON_COMMAND(ID_SETTING_ROUTINE, OnSettingRoutine)
 	ON_COMMAND(ID_SETTING_SECTION, OnSettingSection)
+	ON_COMMAND(ID_SETTING_PROJECTS, OnSettingProjects)
 	ON_COMMAND(ID_SETTING_TASKCATALOG, OnSettingTaskCatalog)
 	ON_COMMAND(ID_SETTING_CALENDAR, OnSettingCalendar)
 	ON_COMMAND(ID_SETTING_APP, OnSettingApp)
@@ -476,6 +483,18 @@ void MyTasksDialog::OnUpdateViewHideCompletedTasks(CCmdUI* cmdUI)
 	cmdUI->SetCheck(!in->mIsShowCompletedTasks);
 }
 
+void MyTasksDialog::OnViewTimeUnit()
+{
+	in->mIsShowTimeUnitAsHours = !in->mIsShowTimeUnitAsHours;
+	RedrawTasks();
+	UpdateTimeSection();
+}
+
+void MyTasksDialog::OnUpdateViewTimeUnit(CCmdUI* cmdUI)
+{
+	cmdUI->SetCheck(in->mIsShowTimeUnitAsHours);
+}
+
 void MyTasksDialog::OnSettingRoutine()
 {
 }
@@ -498,6 +517,23 @@ void MyTasksDialog::OnSettingSection()
 
 	// ToDo:再計算
 }
+
+void MyTasksDialog::OnSettingProjects()
+{
+	ProjectListDialog dlg;
+
+	// ToDo: プロジェクトのリストをダイアログにセット
+
+	if(dlg.DoModal() != IDOK) {
+		return;
+	}
+	// ToDo: プロジェクトのリストをダイアログから受け取る
+
+	// ToDo: 保存
+
+	// ToDo: 再計算
+}
+
 
 void MyTasksDialog::OnSettingTaskCatalog()
 {
@@ -552,7 +588,7 @@ void MyTasksDialog::UpdateTimeSection()
 	}
 
 	if (curSectionIndex == -1) {
-		in->mNextSectionGuide = _T("(時間区分が未定義)");
+		in->mNextSectionGuide = _T("(該当する時間区分なし)");
 		return;
 	}
 
@@ -561,12 +597,22 @@ void MyTasksDialog::UpdateTimeSection()
 	int nextIndex = curSectionIndex + 1;
 	if (nextIndex >= (int)in->mSections.size()) {
 		// 最後の区分
-		in->mNextSectionGuide.Format(_T("[%s]あと%d分"), dispName, threshold);
+		if (in->mIsShowTimeUnitAsHours) {
+			in->mNextSectionGuide.Format(_T("[%s]あと%.1lfh"), dispName, threshold / 60.0);
+		}
+		else {
+			in->mNextSectionGuide.Format(_T("[%s]あと%d分"), dispName, threshold);
+		}
 	}
 	else {
 		int nextMinutes;
 		in->mSections[nextIndex].GetStartTimespan(tmCurrent, nextMinutes);
-		in->mNextSectionGuide.Format(_T("[%s]次の区分まで%d分"), dispName, nextMinutes);
+		if (in->mIsShowTimeUnitAsHours) {
+			in->mNextSectionGuide.Format(_T("[%s]次の区分まで%.1lf分"), dispName, nextMinutes / 60.0);
+		}
+		else {
+			in->mNextSectionGuide.Format(_T("[%s]次の区分まで%d分"), dispName, nextMinutes);
+		}
 	}
 }
 

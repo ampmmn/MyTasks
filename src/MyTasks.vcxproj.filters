@@ -84,6 +84,15 @@
     <ClInclude Include="core\WorkItem.h">
       <Filter>core</Filter>
     </ClInclude>
+    <ClInclude Include="gui\ProjectListDialog.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Project.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\ProjectEditDialog.h">
+      <Filter>gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -124,6 +133,15 @@
     </ClCompile>
     <ClCompile Include="core\WorkItem.cpp">
       <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\ProjectListDialog.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Project.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\ProjectEditDialog.cpp">
+      <Filter>gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

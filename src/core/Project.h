@@ -16,7 +16,4 @@ public:
 	CString mCode;
 	// プロジェクト名
 	CString mName;
-
-	// プロジェクトの作業テーマ
-	std::vector<Thema> mThemaList;
 };

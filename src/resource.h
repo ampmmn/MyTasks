@@ -12,7 +12,6 @@
 #define IDI_TASKTRAY                    133
 #define IDD_PROJECTS                    134
 #define IDD_PROJECT                     136
-#define IDD_NEWTASK                     138
 #define IDD_DATECHANGE                  140
 #define IDD_TASKEDIT                    142
 #define IDC_LIST_TASKS                  1000
@@ -29,37 +28,39 @@
 #define IDC_LIST_PROJECTS               1011
 #define IDC_EDIT_END_C                  1012
 #define IDC_BUTTON_ADD                  1013
-#define IDC_DATETIMEPICKER1             1013
-#define IDC_EDIT_END_D                  1014
-#define IDC_CHECK_TIMEFIXED             1014
-#define IDC_BUTTON_EDIT                 1015
-#define IDC_CHECK_TIMEFIXED2            1015
-#define IDC_EDIT1                       1016
-#define IDC_EDIT_NAME                   1016
-#define IDC_CHECK_TIMEFIXED3            1016
-#define IDC_EDIT_END_E                  1017
-#define IDC_COMBO_THEMA                 1017
-#define IDC_EDIT2                       1018
-#define IDC_EDIT_CODE                   1018
-#define IDC_EDIT_SUBJECT                1018
-#define IDC_EDIT_END_F                  1019
-#define IDC_EDIT_ESTIMATEDTIME          1019
-#define IDC_BUTTON_ARCHIVE              1020
-#define IDC_COMBO_CATEGORY              1020
-#define IDC_EDIT3                       1021
-#define IDC_EDIT_STARTDATE              1021
-#define IDC_COMBO_PROJECT               1021
-#define IDC_EDIT_END_G                  1022
-#define IDC_EDIT_ESTIMATEDTIME2         1022
-#define IDC_EDIT4                       1023
-#define IDC_EDIT_ENDDATE                1023
-#define IDC_EDIT_ESTIMATEDTIME3         1023
-#define IDC_EDIT_END_I                  1024
-#define IDC_EDIT_END_H                  1025
-#define IDC_LIST_THEMA                  1026
-#define IDC_BUTTON_ADD2                 1027
-#define IDC_BUTTON_ADD3                 1028
-#define IDC_BUTTON_DELETE               1028
+#define IDC_DATETIMEPICKER1             1014
+#define IDC_EDIT_END_D                  1015
+#define IDC_CHECK_TIMEFIXED             1016
+#define IDC_BUTTON_EDIT                 1017
+#define IDC_CHECK_AUTOSTART             1018
+#define IDC_EDIT1                       1019
+#define IDC_EDIT_NAME                   1020
+#define IDC_CHECK_TIMEFIXED3            1021
+#define IDC_CHECK_AUTOEND               1022
+#define IDC_EDIT_END_E                  1023
+#define IDC_COMBO_THEMA                 1024
+#define IDC_EDIT2                       1025
+#define IDC_EDIT_CODE                   1026
+#define IDC_EDIT_SUBJECT                1027
+#define IDC_EDIT_END_F                  1028
+#define IDC_EDIT_FIXEDSTARTTIME         1029
+#define IDC_BUTTON_ARCHIVE              1030
+#define IDC_COMBO_CATEGORY              1031
+#define IDC_EDIT3                       1032
+#define IDC_EDIT_STARTDATE              1033
+#define IDC_COMBO_PROJECT               1034
+#define IDC_EDIT_END_G                  1035
+#define IDC_EDIT_ESTIMATEDTIME2         1036
+#define IDC_EDIT_ESTIMATEDTIME          1036
+#define IDC_EDIT4                       1037
+#define IDC_EDIT_ENDDATE                1038
+#define IDC_EDIT_FIXEDENDTIME           1039
+#define IDC_EDIT_END_I                  1040
+#define IDC_EDIT_END_H                  1041
+#define IDC_LIST_THEMA                  1042
+#define IDC_BUTTON_ADD2                 1043
+#define IDC_BUTTON_ADD3                 1044
+#define IDC_BUTTON_DELETE               1045
 #define ID_VIEW_SETTINGS                32771
 #define ID_HELP_ABOUT                   32772
 #define ID_TASKS                        32773
@@ -107,13 +108,17 @@
 #define ID_SETTING_APP                  32815
 #define ID_32816                        32816
 #define ID_TASK_ADD                     32817
+#define ID_32818                        32818
+#define ID_SETTING_PROJECTS             32819
+#define ID_32820                        32820
+#define ID_VIEW_TIMEUNIT                32821
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        144
-#define _APS_NEXT_COMMAND_VALUE         32818
+#define _APS_NEXT_COMMAND_VALUE         32822
 #define _APS_NEXT_CONTROL_VALUE         1018
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

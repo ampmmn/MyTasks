@@ -58,8 +58,11 @@ protected:
 	afx_msg void OnDateJump();
 	afx_msg void OnViewHideCompletedTasks();
 	afx_msg void OnUpdateViewHideCompletedTasks(CCmdUI* cmdUI);
+	afx_msg void OnViewTimeUnit();
+	afx_msg void OnUpdateViewTimeUnit(CCmdUI* cmdUI);
 	afx_msg void OnSettingRoutine();
 	afx_msg void OnSettingSection();
+	afx_msg void OnSettingProjects();
 	afx_msg void OnSettingTaskCatalog();
 	afx_msg void OnSettingCalendar();
 	afx_msg void OnSettingApp();
