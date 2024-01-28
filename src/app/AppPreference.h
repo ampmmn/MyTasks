@@ -2,6 +2,7 @@
 
 #include "AppPreferenceListenerIF.h"
 #include "Settings.h"
+#include "core/Section.h"
 #include <memory>
 
 class AppPreference
@@ -23,6 +24,8 @@ public:
 	void SetSettings(const Settings& settings);
 	const Settings& GetSettings();
 
+	void SetSections(const std::vector<Section>& sections);
+	void GetSections(std::vector<Section>& sections);
 
 protected:
 	AppPreference();

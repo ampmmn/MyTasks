@@ -27,6 +27,7 @@
 #define IDC_EDIT_END_F                  1009
 #define IDC_EDIT_END_G                  1010
 #define IDC_EDIT_END_I                  1011
+#define IDC_EDIT_END_H                  1011
 #define ID_VIEW_SETTINGS                32771
 #define ID_HELP_ABOUT                   32772
 #define ID_TASKS                        32773
@@ -72,13 +73,15 @@
 #define ID_SETTING_TASKCATALOG          32813
 #define ID_SETTING_CALENDAR             32814
 #define ID_SETTING_APP                  32815
+#define ID_32816                        32816
+#define ID_TASK_ADD                     32817
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        134
-#define _APS_NEXT_COMMAND_VALUE         32816
+#define _APS_NEXT_COMMAND_VALUE         32818
 #define _APS_NEXT_CONTROL_VALUE         1005
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

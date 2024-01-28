@@ -6,6 +6,10 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyTasks", "src\MyTasks.vcxproj", "{C13F6A01-6C25-4018-93CA-F38745683012}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyAppsUnitTest", "tests\MyAppsUnitTest.vcxproj", "{D2A59071-07F9-4CEE-BB6C-769577545944}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6D6AE8C3-8970-427B-BE0F-687B3AF87740} = {6D6AE8C3-8970-427B-BE0F-687B3AF87740}
+		{C13F6A01-6C25-4018-93CA-F38745683012} = {C13F6A01-6C25-4018-93CA-F38745683012}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "googletest", "tests\googletest\googletest.vcxproj", "{6D6AE8C3-8970-427B-BE0F-687B3AF87740}"
 EndProject

@@ -22,6 +22,9 @@
     <Filter Include="app">
       <UniqueIdentifier>{20dc2d3a-f11b-4346-a440-32bf84fe3b6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="core">
+      <UniqueIdentifier>{2184ddc2-8f4f-4be3-afec-3ae3278e5061}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -69,6 +72,9 @@
     <ClInclude Include="utility\ScopeAttachThreadInput.h">
       <Filter>utility</Filter>
     </ClInclude>
+    <ClInclude Include="core\Section.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -97,6 +103,9 @@
     </ClCompile>
     <ClCompile Include="utility\Accessibility.cpp">
       <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Section.cpp">
+      <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,10 @@
 #include "gui/AboutDialog.h"
 #include "gui/SectionDialog.h"
 
+#include "core/Section.h"
+
+#include "app/AppPreference.h"
+
 #include "afxdialogex.h"
 #include "utility/ScopeAttachThreadInput.h"
 #include "utility/SharedHwnd.h"
@@ -27,12 +31,22 @@ struct MyTasksDialog::PImpl
 	std::unique_ptr<SharedHwnd> mSharedHwnd;
 	   // 後で起動したプロセスから有効化するために共有メモリに保存している
 	HICON m_hIcon;
+
+	// 現在の日付(CTimeとして保持するが、この変数で参照するのは年月日のみ)
+	CTime mTimeCurrent;
+
+	// 時間区分
+	std::vector<Section> mSections;
+
+	// 完了タスクを表示するか?
+	bool mIsShowCompletedTasks;
 };
 
 MyTasksDialog::MyTasksDialog(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MYTASKS_DIALOG, pParent), in(new PImpl)
 {
 	in->m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	in->mIsShowCompletedTasks = true;
 }
 
 MyTasksDialog::~MyTasksDialog()
@@ -46,6 +60,7 @@ void MyTasksDialog::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(MyTasksDialog, CDialogEx)
+	ON_WM_INITMENUPOPUP()
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
@@ -64,6 +79,7 @@ BEGIN_MESSAGE_MAP(MyTasksDialog, CDialogEx)
 	ON_COMMAND(ID_DATE_PREV, OnDatePrev)
 	ON_COMMAND(ID_DATE_JUMP, OnDateJump)
 	ON_COMMAND(ID_VIEW_HIDEDONETASKS, OnViewHideCompletedTasks)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_HIDEDONETASKS, OnUpdateViewHideCompletedTasks)
 	ON_COMMAND(ID_SETTING_ROUTINE, OnSettingRoutine)
 	ON_COMMAND(ID_SETTING_SECTION, OnSettingSection)
 	ON_COMMAND(ID_SETTING_TASKCATALOG, OnSettingTaskCatalog)
@@ -102,7 +118,14 @@ BOOL MyTasksDialog::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	// "バージョン情報..." メニューをシステム メニューに追加します。
+	in->mTimeCurrent = CTime::GetCurrentTime();
+
+	CString caption;
+	caption = in->mTimeCurrent.Format(_T("%Y-%m-%d"));
+	SetWindowText(caption);
+
+	auto pref = AppPreference::Get();
+	pref->GetSections(in->mSections);
 
 	// IDM_ABOUTBOX は、システム コマンドの範囲内になければなりません。
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
@@ -146,6 +169,87 @@ BOOL MyTasksDialog::OnInitDialog()
 	in->mSharedHwnd = std::make_unique<SharedHwnd>(GetSafeHwnd());
 
 	return TRUE;  // フォーカスをコントロールに設定した場合を除き、TRUE を返します。
+}
+
+void MyTasksDialog::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
+{
+	ASSERT(pPopupMenu != NULL);
+	// Check the enabled state of various menu items.
+
+	CCmdUI state;
+	state.m_pMenu = pPopupMenu;
+	ASSERT(state.m_pOther == NULL);
+	ASSERT(state.m_pParentMenu == NULL);
+
+	// Determine if menu is popup in top-level menu and set m_pOther to
+	// it if so (m_pParentMenu == NULL indicates that it is secondary popup).
+	HMENU hParentMenu;
+	if (AfxGetThreadState()->m_hTrackingMenu == pPopupMenu->m_hMenu)
+		state.m_pParentMenu = pPopupMenu;    // Parent == child for tracking popup.
+	else if ((hParentMenu = ::GetMenu(m_hWnd)) != NULL)
+	{
+		CWnd* pParent = this;
+		// Child windows don't have menus--need to go to the top!
+		if (pParent != NULL &&
+				(hParentMenu = ::GetMenu(pParent->m_hWnd)) != NULL)
+		{
+			int nIndexMax = ::GetMenuItemCount(hParentMenu);
+			for (int nIndex = 0; nIndex < nIndexMax; nIndex++)
+			{
+				if (::GetSubMenu(hParentMenu, nIndex) == pPopupMenu->m_hMenu)
+				{
+					// When popup is found, m_pParentMenu is containing menu.
+					state.m_pParentMenu = CMenu::FromHandle(hParentMenu);
+					break;
+				}
+			}
+		}
+	}
+
+	state.m_nIndexMax = pPopupMenu->GetMenuItemCount();
+	for (state.m_nIndex = 0; state.m_nIndex < state.m_nIndexMax;
+			state.m_nIndex++)
+	{
+		state.m_nID = pPopupMenu->GetMenuItemID(state.m_nIndex);
+		if (state.m_nID == 0)
+			continue; // Menu separator or invalid cmd - ignore it.
+
+		ASSERT(state.m_pOther == NULL);
+		ASSERT(state.m_pMenu != NULL);
+		if (state.m_nID == (UINT)-1)
+		{
+			// Possibly a popup menu, route to first item of that popup.
+			state.m_pSubMenu = pPopupMenu->GetSubMenu(state.m_nIndex);
+			if (state.m_pSubMenu == NULL ||
+					(state.m_nID = state.m_pSubMenu->GetMenuItemID(0)) == 0 ||
+					state.m_nID == (UINT)-1)
+			{
+				continue;       // First item of popup can't be routed to.
+			}
+			state.DoUpdate(this, TRUE);   // Popups are never auto disabled.
+		}
+		else
+		{
+			// Normal menu item.
+			// Auto enable/disable if frame window has m_bAutoMenuEnable
+			// set and command is _not_ a system command.
+			state.m_pSubMenu = NULL;
+			state.DoUpdate(this, FALSE);
+		}
+
+		// Adjust for menu deletions and additions.
+		UINT nCount = pPopupMenu->GetMenuItemCount();
+		if (nCount < state.m_nIndexMax)
+		{
+			state.m_nIndex -= (state.m_nIndexMax - nCount);
+			while (state.m_nIndex < nCount &&
+					pPopupMenu->GetMenuItemID(state.m_nIndex) == state.m_nID)
+			{
+				state.m_nIndex++;
+			}
+		}
+		state.m_nIndexMax = nCount;
+	}
 }
 
 void MyTasksDialog::OnSysCommand(UINT nID, LPARAM lParam)
@@ -256,14 +360,42 @@ void MyTasksDialog::OnTaskEstimateInterrupt()
 
 void MyTasksDialog::OnDateToday()
 {
+	in->mTimeCurrent = CTime::GetCurrentTime();
+
+	CString caption;
+	caption = in->mTimeCurrent.Format(_T("%Y-%m-%d"));
+	SetWindowText(caption);
+
+	// ToDo: 日付変更による当日データの取得
+
+	RedrawTasks();
 }
 
 void MyTasksDialog::OnDateNext()
 {
+	auto t = in->mTimeCurrent;
+	in->mTimeCurrent += CTimeSpan(1, 0, 0, 0);
+
+	CString caption;
+	caption = in->mTimeCurrent.Format(_T("%Y-%m-%d"));
+	SetWindowText(caption);
+
+	// ToDo: 日付変更による当日データの取得
+
+	RedrawTasks();
 }
 
 void MyTasksDialog::OnDatePrev()
 {
+	in->mTimeCurrent -= CTimeSpan(1, 0, 0, 0);
+
+	CString caption;
+	caption = in->mTimeCurrent.Format(_T("%Y-%m-%d"));
+	SetWindowText(caption);
+
+	// ToDo: 日付変更による当日データの取得
+
+	RedrawTasks();
 }
 
 void MyTasksDialog::OnDateJump()
@@ -272,6 +404,13 @@ void MyTasksDialog::OnDateJump()
 
 void MyTasksDialog::OnViewHideCompletedTasks()
 {
+	in->mIsShowCompletedTasks = !in->mIsShowCompletedTasks;
+	RedrawTasks();
+}
+
+void MyTasksDialog::OnUpdateViewHideCompletedTasks(CCmdUI* cmdUI)
+{
+	cmdUI->SetCheck(!in->mIsShowCompletedTasks);
 }
 
 void MyTasksDialog::OnSettingRoutine()
@@ -281,14 +420,18 @@ void MyTasksDialog::OnSettingRoutine()
 void MyTasksDialog::OnSettingSection()
 {
 	SectionDialog dlg;
-
-	// ToDo: ダイアログにセクション設定を設定
-
+	dlg.SetParam(in->mSections);
 	if (dlg.DoModal() != IDOK) {
 		return;
 	}
 
-	// ToDo:設定を受け取り保存
+	// 設定を受け取り保存
+	dlg.GetParam(in->mSections);
+
+	auto pref = AppPreference::Get();
+	pref->SetSections(in->mSections);
+
+	pref->Save();
 
 	// ToDo:再計算
 }
@@ -305,3 +448,8 @@ void MyTasksDialog::OnSettingApp()
 {
 }
 
+
+void MyTasksDialog::RedrawTasks()
+{
+	// ToDo: 実装
+}

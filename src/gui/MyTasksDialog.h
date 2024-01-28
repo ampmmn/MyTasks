@@ -18,6 +18,8 @@ public:
 	static void ActivateWindow(HWND hwnd);
 	void OnContextMenu(CWnd* pWnd, CPoint pos);
 
+	void RedrawTasks();
+
 // ダイアログ データ
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV サポート
@@ -30,6 +32,7 @@ protected:
 
 	// 生成された、メッセージ割り当て関数
 	virtual BOOL OnInitDialog();
+	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
@@ -47,6 +50,7 @@ protected:
 	afx_msg void OnDatePrev();
 	afx_msg void OnDateJump();
 	afx_msg void OnViewHideCompletedTasks();
+	afx_msg void OnUpdateViewHideCompletedTasks(CCmdUI* cmdUI);
 	afx_msg void OnSettingRoutine();
 	afx_msg void OnSettingSection();
 	afx_msg void OnSettingTaskCatalog();

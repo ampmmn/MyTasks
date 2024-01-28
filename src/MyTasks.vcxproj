@@ -273,6 +273,7 @@
     <ClInclude Include="app\AppPreference.h" />
     <ClInclude Include="app\AppPreferenceListenerIF.h" />
     <ClInclude Include="app\Settings.h" />
+    <ClInclude Include="core\Section.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="gui\AboutDialog.h" />
     <ClInclude Include="gui\MyTasksDialog.h" />
@@ -289,6 +290,7 @@
   <ItemGroup>
     <ClCompile Include="app\AppPreference.cpp" />
     <ClCompile Include="app\Settings.cpp" />
+    <ClCompile Include="core\Section.cpp" />
     <ClCompile Include="gui\AboutDialog.cpp" />
     <ClCompile Include="gui\MyTasksDialog.cpp" />
     <ClCompile Include="gui\SectionDialog.cpp" />

@@ -373,3 +373,76 @@ void AppPreference::OnExit()
 //	return in->mSettings.Get(_T("Soyokaze:FilerPath"), _T(""));
 //}
 
+void AppPreference::SetSections(const std::vector<Section>& sections)
+{
+	CString key;
+
+	int index = 1;
+	int count = (int)sections.size();
+	in->mSettings.Set(_T("Section:Count"), count);
+	for (auto& section : sections) {
+
+		// 表示名
+		key.Format(_T("Section:DisplayName%d"), index);
+		in->mSettings.Set(key, section.mDisplayName);
+
+		key.Format(_T("Section:StartHour%d"), index);
+		in->mSettings.Set(key, (int)section.mStartHour);
+
+		key.Format(_T("Section:StartMinute%d"), index);
+		in->mSettings.Set(key, (int)section.mStartMinute);
+
+		key.Format(_T("Section:EndHour%d"), index);
+		in->mSettings.Set(key, (int)section.mEndHour);
+
+		key.Format(_T("Section:EndMinute%d"), index);
+		in->mSettings.Set(key, (int)section.mEndMinute);
+
+		index++;
+	}
+}
+
+void AppPreference::GetSections(std::vector<Section>& sections)
+{
+	CString key;
+
+	std::vector<Section> sectionsTmp;
+
+	int count = in->mSettings.Get(_T("Section:Count"), -1);
+	if (count == -1) {
+		// デフォルト設定を返す
+		sectionsTmp.push_back(Section(_T("A"), 0, 0, 9, 0));
+		sectionsTmp.push_back(Section(_T("B"), 9, 0, 12, 0));
+		sectionsTmp.push_back(Section(_T("C"), 12, 0, 13, 0));
+		sectionsTmp.push_back(Section(_T("D"), 13, 0, 15, 0));
+		sectionsTmp.push_back(Section(_T("E"), 15, 0, 17, 30));
+		sectionsTmp.push_back(Section(_T("F"), 17, 30, 24, 0));
+		sections.swap(sectionsTmp);
+		return;
+	}
+
+	for (int index = 1; index <= count; ++index) {
+
+		Section section;
+		// 表示名
+		key.Format(_T("Section:DisplayName%d"), index);
+		section.mDisplayName = in->mSettings.Get(key, _T(""));
+
+		key.Format(_T("Section:StartHour%d"), index);
+		section.mStartHour = in->mSettings.Get(key, 0);
+
+		key.Format(_T("Section:StartMinute%d"), index);
+		section.mStartMinute = in->mSettings.Get(key, 0);
+
+		key.Format(_T("Section:EndHour%d"), index);
+		section.mEndHour = in->mSettings.Get(key, 0);
+
+		key.Format(_T("Section:EndMinute%d"), index);
+		section.mEndMinute = in->mSettings.Get(key, 0);
+
+		sectionsTmp.push_back(section);
+	}
+
+	sections.swap(sectionsTmp);
+}
+

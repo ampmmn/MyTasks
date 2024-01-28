@@ -1,23 +1,49 @@
+#include "pch.h"
 #include "gtest/gtest.h"
-#include "utility/AppProfile.h"
+#include "core/Section.h"
 #include <regex>
 
-TEST(AppProfile, GetDirPath)
+
+TEST(Section, ConstructDefault)
 {
-	TCHAR path[1024];
-	CAppProfile::GetDirPath(path, 1024);
+	Section section;
 
-	std::wregex re(LR"(^.:\\Users\\.+?\\\.soyokaze)");
-
-	EXPECT_TRUE(std::regex_match(path, re));
+	EXPECT_EQ(_T(""), section.mDisplayName);
+	EXPECT_EQ(0, section.GetStartHour());
+	EXPECT_EQ(0, section.GetStartMinute());
+	EXPECT_EQ(0, section.GetEndHour());
+	EXPECT_EQ(0, section.GetEndMinute());
 }
 
-TEST(AppProfile, GetFilePath)
+TEST(Section, ConstructParam)
 {
-	TCHAR path[1024];
-	CAppProfile::GetFilePath(path, 1024);
+	Section section(_T("A"), 1, 30, 12, 0);
 
-	std::wregex re(LR"(^.:\\Users\\.+?\\\.soyokaze\\settings.ini)");
+	EXPECT_EQ(_T("A"), section.mDisplayName);
+	EXPECT_EQ(1, section.GetStartHour());
+	EXPECT_EQ(30, section.GetStartMinute());
+	EXPECT_EQ(12, section.GetEndHour());
+	EXPECT_EQ(0, section.GetEndMinute());
+}
 
-	EXPECT_TRUE(std::regex_match(path, re));
+TEST(Section, ToStringStartTime)
+{
+	Section section(_T("A"), 1, 30, 12, 0);
+	EXPECT_EQ(_T("0130"), section.ToStringStartTime());
+}
+
+TEST(Section, ToStringEndTime)
+{
+	Section section(_T("A"), 1, 30, 12, 0);
+	EXPECT_EQ(_T("1200"), section.ToStringEndTime());
+}
+
+TEST(Section, IsValidStringExpression)
+{
+	EXPECT_TRUE(Section::IsValidStringExpression(_T("0000")));
+	EXPECT_TRUE(Section::IsValidStringExpression(_T("0059")));
+	EXPECT_TRUE(Section::IsValidStringExpression(_T("1030")));
+	EXPECT_TRUE(Section::IsValidStringExpression(_T("2359")));
+	EXPECT_FALSE(Section::IsValidStringExpression(_T("2559")));
+	EXPECT_FALSE(Section::IsValidStringExpression(_T("2361")));
 }
