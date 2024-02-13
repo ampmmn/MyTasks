@@ -2,6 +2,7 @@
 #include "framework.h"
 #include "ProjectListDialog.h"
 #include "gui/ProjectEditDialog.h"
+#include "gui/DlgCtrlCommon.h"
 #include "app/AppPreference.h"
 #include "utility/Accessibility.h"
 #include "resource.h"
@@ -50,18 +51,6 @@ BEGIN_MESSAGE_MAP(ProjectListDialog, CDialogEx)
 	ON_COMMAND(IDC_BUTTON_ARCHIVE, OnButtonArchive)
 	ON_NOTIFY(NM_DBLCLK, IDC_LIST_PROJECTS, OnNMDblclk)
 END_MESSAGE_MAP()
-
-static void AddColumn(CListCtrl* list, int index, LPCTSTR headerName, int width)
-{
-	LVCOLUMN lvc = {};
-	lvc.mask = LVCF_TEXT|LVCF_FMT|LVCF_WIDTH;
-
-	CString strHeader(headerName);
-	lvc.pszText = const_cast<LPTSTR>((LPCTSTR)strHeader);
-	lvc.cx = width;
-	lvc.fmt = LVCFMT_LEFT;
-	list->InsertColumn(index, &lvc);
-}
 
 BOOL ProjectListDialog::OnInitDialog()
 {

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "framework.h"
 #include "ProjectEditDialog.h"
+#include "gui/DlgCtrlCommon.h"
 #include "utility/Accessibility.h"
 #include "resource.h"
 
@@ -12,6 +13,9 @@
 struct ProjectEditDialog::PImpl
 {
 	Project mProject;
+
+	// テーマ一覧
+	CListCtrl mThemaListWnd;
 
 	// メッセージ欄
 	CString mMessage;
@@ -48,6 +52,13 @@ END_MESSAGE_MAP()
 BOOL ProjectEditDialog::OnInitDialog()
 {
 	__super::OnInitDialog();
+
+	// リストの列を設定
+	CListCtrl& listWnd = in->mThemaListWnd;
+	listWnd.SubclassDlgItem(IDC_LIST_THEMA, this);
+	AddColumn(&listWnd, 0, _T("識別子"), 60);
+	AddColumn(&listWnd, 1, _T("名称"), 240);
+	AddColumn(&listWnd, 2, _T("コメント"), 240);
 
 	UpdateStatus();
 	UpdateData(FALSE);

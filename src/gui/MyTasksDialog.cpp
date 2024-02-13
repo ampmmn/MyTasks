@@ -10,6 +10,7 @@
 #include "gui/SectionDialog.h"
 #include "gui/DateSelectDialog.h"
 #include "gui/ProjectListDialog.h"
+#include "gui/DlgCtrlCommon.h"
 
 #include "core/Section.h"
 
@@ -112,18 +113,6 @@ void MyTasksDialog::ActivateWindow(HWND hwnd)
 	if (IsWindow(hwnd)) {
 		::PostMessage(hwnd, WM_APP+1, 0, 0);
 	}
-}
-
-static void AddColumn(CListCtrl* list, int index, LPCTSTR headerName, int width)
-{
-	LVCOLUMN lvc = {};
-	lvc.mask = LVCF_TEXT|LVCF_FMT|LVCF_WIDTH;
-
-	CString strHeader(headerName);
-	lvc.pszText = const_cast<LPTSTR>((LPCTSTR)strHeader);
-	lvc.cx = width;
-	lvc.fmt = LVCFMT_LEFT;
-	list->InsertColumn(index, &lvc);
 }
 
 // MyTasksDialog メッセージ ハンドラー

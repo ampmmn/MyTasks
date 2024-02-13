@@ -280,6 +280,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="gui\AboutDialog.h" />
     <ClInclude Include="gui\DateSelectDialog.h" />
+    <ClInclude Include="gui\DlgCtrlCommon.h" />
     <ClInclude Include="gui\MyTasksDialog.h" />
     <ClInclude Include="gui\ProjectEditDialog.h" />
     <ClInclude Include="gui\ProjectListDialog.h" />
@@ -302,6 +303,7 @@
     <ClCompile Include="core\WorkItem.cpp" />
     <ClCompile Include="gui\AboutDialog.cpp" />
     <ClCompile Include="gui\DateSelectDialog.cpp" />
+    <ClCompile Include="gui\DlgCtrlCommon.cpp" />
     <ClCompile Include="gui\MyTasksDialog.cpp" />
     <ClCompile Include="gui\ProjectEditDialog.cpp" />
     <ClCompile Include="gui\ProjectListDialog.cpp" />

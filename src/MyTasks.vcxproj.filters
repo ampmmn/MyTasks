@@ -93,6 +93,9 @@
     <ClInclude Include="gui\ProjectEditDialog.h">
       <Filter>gui</Filter>
     </ClInclude>
+    <ClInclude Include="gui\DlgCtrlCommon.h">
+      <Filter>gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -141,6 +144,9 @@
       <Filter>core</Filter>
     </ClCompile>
     <ClCompile Include="gui\ProjectEditDialog.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\DlgCtrlCommon.cpp">
       <Filter>gui</Filter>
     </ClCompile>
   </ItemGroup>
