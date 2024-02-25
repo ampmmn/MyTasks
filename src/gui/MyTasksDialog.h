@@ -67,5 +67,6 @@ protected:
 	afx_msg void OnSettingCalendar();
 	afx_msg void OnSettingApp();
 	DECLARE_MESSAGE_MAP()
-	LRESULT OnUserMessageActiveWindow(WPARAM wp, LPARAM lp);
+	afx_msg LRESULT OnUserMessageActiveWindow(WPARAM wp, LPARAM lp);
+	afx_msg LRESULT OnMessageSessionChange(WPARAM wp, LPARAM lp);
 };

@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "framework.h"
 #include "ProjectEditDialog.h"
+#include "core/ThemeRepository.h"
+#include "ThemeDialog.h"
 #include "gui/DlgCtrlCommon.h"
 #include "utility/Accessibility.h"
 #include "resource.h"
@@ -9,13 +11,10 @@
 #define new DEBUG_NEW
 #endif
 
-
 struct ProjectEditDialog::PImpl
 {
-	Project mProject;
-
-	// テーマ一覧
-	CListCtrl mThemaListWnd;
+	// 
+	ProjectData mProject;
 
 	// メッセージ欄
 	CString mMessage;
@@ -30,35 +29,36 @@ ProjectEditDialog::~ProjectEditDialog()
 {
 }
 
-void ProjectEditDialog::SetProject(const Project& project)
+void ProjectEditDialog::SetProject(const ProjectData& data)
 {
-	in->mProject = project;
+	in->mProject = data;
 }
 
-void ProjectEditDialog::GetProject(Project& project)
+void ProjectEditDialog::GetProject(ProjectData& data)
 {
-	project = in->mProject;
+	data = in->mProject;
 }
 
 void ProjectEditDialog::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_STATIC_STATUSMSG, in->mMessage);
+	DDX_Text(pDX, IDC_EDIT_NAME, in->mProject.mName);
+	DDX_Text(pDX, IDC_EDIT_CODE, in->mProject.mCode);
+	DDX_Text(pDX, IDC_EDIT_STARTDATE, in->mProject.mStartDate);
+	DDX_Text(pDX, IDC_EDIT_ENDDATE, in->mProject.mEndDate);
+	DDX_Text(pDX, IDC_EDIT_DESCRIPTION, in->mProject.mDescription);
 }
 
 BEGIN_MESSAGE_MAP(ProjectEditDialog, CDialogEx)
 	ON_WM_CTLCOLOR()
+	ON_EN_CHANGE(IDC_EDIT_NAME, OnUpdateStatus)
+	ON_EN_CHANGE(IDC_EDIT_CODE, OnUpdateStatus)
 END_MESSAGE_MAP()
 
 BOOL ProjectEditDialog::OnInitDialog()
 {
 	__super::OnInitDialog();
-
-	// リストの列を設定
-	CListCtrl& listWnd = in->mThemaListWnd;
-	listWnd.SubclassDlgItem(IDC_LIST_THEMA, this);
-	AddColumn(&listWnd, 0, _T("識別子"), 60);
-	AddColumn(&listWnd, 1, _T("名称"), 240);
-	AddColumn(&listWnd, 2, _T("コメント"), 240);
 
 	UpdateStatus();
 	UpdateData(FALSE);
@@ -68,6 +68,16 @@ BOOL ProjectEditDialog::OnInitDialog()
 
 bool ProjectEditDialog::UpdateStatus()
 {
+	GetDlgItem(IDOK)->EnableWindow(FALSE);
+
+	if (in->mProject.mName.IsEmpty()) {
+		in->mMessage = _T("プロジェクト名称を入力してください");
+		return false;
+	}
+	if (in->mProject.mCode.IsEmpty()) {
+		in->mMessage = _T("コードを入力してください");
+		return false;
+	}
 
 	in->mMessage.Empty();
 	GetDlgItem(IDOK)->EnableWindow(TRUE);
@@ -84,3 +94,23 @@ void ProjectEditDialog::OnOK()
 	__super::OnOK();
 }
 
+void ProjectEditDialog::OnUpdateStatus()
+{
+	UpdateData();
+	UpdateStatus();
+	UpdateData(FALSE);
+}
+
+HBRUSH ProjectEditDialog::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH br = __super::OnCtlColor(pDC, pWnd, nCtlColor);
+	if (utility::IsHighContrastMode()) {
+		return br;
+	}
+
+	if (pWnd->GetDlgCtrlID() == IDC_STATIC_STATUSMSG) {
+		COLORREF crTxt = in->mMessage.IsEmpty() ? RGB(0,0,0) : RGB(255, 0, 0);
+		pDC->SetTextColor(crTxt);
+	}
+	return br;
+}

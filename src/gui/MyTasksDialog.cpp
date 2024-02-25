@@ -20,6 +20,9 @@
 #include "utility/ScopeAttachThreadInput.h"
 #include "utility/SharedHwnd.h"
 #include "resource.h"
+#include <wtsapi32.h>
+
+#pragma comment(lib, "Wtsapi32.lib")
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -31,6 +34,8 @@ static UINT TIMERID_SECTION = 1;
 
 struct MyTasksDialog::PImpl
 {
+	bool IsToday();
+
 	// ウインドウハンドル(共有メモリに保存する用)
 	std::unique_ptr<SharedHwnd> mSharedHwnd;
 	   // 後で起動したプロセスから有効化するために共有メモリに保存している
@@ -50,6 +55,15 @@ struct MyTasksDialog::PImpl
 	// 次のセクションまでの残り時間案内
 	CString mNextSectionGuide;
 };
+
+// 当日か?
+bool MyTasksDialog::PImpl:: IsToday()
+{
+	CTime tmNow = CTime::GetCurrentTime();
+	return mTimeCurrent.GetYear() == tmNow.GetYear() &&
+	       mTimeCurrent.GetMonth() == tmNow.GetMonth() &&
+	       mTimeCurrent.GetDay() == tmNow.GetDay();
+}
 
 MyTasksDialog::MyTasksDialog(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MYTASKS_DIALOG, pParent), in(new PImpl)
@@ -100,6 +114,7 @@ BEGIN_MESSAGE_MAP(MyTasksDialog, CDialogEx)
 	ON_COMMAND(ID_SETTING_TASKCATALOG, OnSettingTaskCatalog)
 	ON_COMMAND(ID_SETTING_CALENDAR, OnSettingCalendar)
 	ON_COMMAND(ID_SETTING_APP, OnSettingApp)
+	ON_MESSAGE(WM_WTSSESSION_CHANGE, OnMessageSessionChange)
 END_MESSAGE_MAP()
 
 void MyTasksDialog::ActivateWindow()
@@ -120,6 +135,8 @@ void MyTasksDialog::ActivateWindow(HWND hwnd)
 BOOL MyTasksDialog::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
+
+	WTSRegisterSessionNotification(GetSafeHwnd(), NOTIFY_FOR_ALL_SESSIONS);
 
 	in->mTimeCurrent = CTime::GetCurrentTime();
 
@@ -186,6 +203,8 @@ void MyTasksDialog::OnOK()
 
 void MyTasksDialog::OnCancel()
 {
+	WTSUnRegisterSessionNotification(GetSafeHwnd());
+
 	__super::OnCancel();
 	// ToDo: 実運用する段階になったら有効化する
 	//ShowWindow(SW_HIDE);
@@ -548,11 +567,17 @@ void MyTasksDialog::UpdateDate()
 	caption = in->mTimeCurrent.Format(_T("%Y-%m-%d"));
 	SetWindowText(caption);
 
+	UpdateTimeSection();
+
 	// ToDo: 実装
 }
 
 void MyTasksDialog::UpdateTimeSection()
 {
+	if (in->IsToday() == FALSE) {
+		in->mNextSectionGuide = _T("当日でない");
+		return;
+	}
 	int curSectionIndex = -1;
 	int threshold = 0x7fffffff;
 
@@ -597,7 +622,7 @@ void MyTasksDialog::UpdateTimeSection()
 		int nextMinutes;
 		in->mSections[nextIndex].GetStartTimespan(tmCurrent, nextMinutes);
 		if (in->mIsShowTimeUnitAsHours) {
-			in->mNextSectionGuide.Format(_T("[%s]次の区分まで%.1lf分"), dispName, nextMinutes / 60.0);
+			in->mNextSectionGuide.Format(_T("[%s]次の区分まで%.1lfh"), dispName, nextMinutes / 60.0);
 		}
 		else {
 			in->mNextSectionGuide.Format(_T("[%s]次の区分まで%d分"), dispName, nextMinutes);
@@ -627,4 +652,12 @@ void MyTasksDialog::ShowHelp()
 
 	ShellExecuteEx(&si);
 	CloseHandle(si.hProcess);
+}
+
+
+LRESULT MyTasksDialog::OnMessageSessionChange(WPARAM wp, LPARAM lp)
+{
+	// ロックされたとき、wpにWTS_SESSION_LOCK(7)、解除されたときは WTS_SESSION_UNLOCK(8)が通知される
+	// ToDo: このツール上、ロックを離席という扱いにする
+	return 0;
 }

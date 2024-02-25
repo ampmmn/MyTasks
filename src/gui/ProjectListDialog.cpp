@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "framework.h"
 #include "ProjectListDialog.h"
+#include "core/ProjectRepository.h"
 #include "gui/ProjectEditDialog.h"
 #include "gui/DlgCtrlCommon.h"
 #include "app/AppPreference.h"
@@ -14,10 +15,19 @@
 
 struct ProjectListDialog::PImpl
 {
+	int GetSelectIndex()
+	{
+		POSITION pos = mProjectListWnd.GetFirstSelectedItemPosition();
+		if (pos == nullptr) {
+			return -1;
+		}
+		return mProjectListWnd.GetNextSelectedItem(pos);
+	}
+
 	CListCtrl mProjectListWnd;
 
 	// プロジェクト一覧
-	std::vector<Project> mProjects;
+	std::vector<Project*> mProjects;
 };
 
 ProjectListDialog::ProjectListDialog() : 
@@ -27,16 +37,6 @@ ProjectListDialog::ProjectListDialog() :
 
 ProjectListDialog::~ProjectListDialog()
 {
-}
-
-void ProjectListDialog::SetProjects(const std::vector<Project>& projects)
-{
-	in->mProjects = projects;
-}
-
-void ProjectListDialog::GetProjects(std::vector<Project>& projects)
-{
-	projects = in->mProjects;
 }
 
 void ProjectListDialog::DoDataExchange(CDataExchange* pDX)
@@ -50,6 +50,7 @@ BEGIN_MESSAGE_MAP(ProjectListDialog, CDialogEx)
 	ON_COMMAND(IDC_BUTTON_EDIT, OnButtonEdit)
 	ON_COMMAND(IDC_BUTTON_ARCHIVE, OnButtonArchive)
 	ON_NOTIFY(NM_DBLCLK, IDC_LIST_PROJECTS, OnNMDblclk)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_PROJECTS, OnLvnItemChange)
 END_MESSAGE_MAP()
 
 BOOL ProjectListDialog::OnInitDialog()
@@ -58,14 +59,47 @@ BOOL ProjectListDialog::OnInitDialog()
 
 	in->mProjectListWnd.SubclassDlgItem(IDC_LIST_PROJECTS, this);
 
-	CListCtrl& list = in->mProjectListWnd;
-	AddColumn(&list, 0, _T("プロジェクト名"), 150);
-	AddColumn(&list, 1, _T("コード"), 80);
+	CListCtrl& listWnd = in->mProjectListWnd;
+
+	// リスト　スタイル変更
+	listWnd.SetExtendedStyle(listWnd.GetExtendedStyle()|LVS_EX_FULLROWSELECT);
+
+	AddColumn(&listWnd, 0, _T("コード"), 80);
+	AddColumn(&listWnd, 1, _T("プロジェクト名"), 150);
+	AddColumn(&listWnd, 2, _T("開始日"), 80);
+	AddColumn(&listWnd, 3, _T("終了日"), 80);
+	
+	// ToDo: リポジトリからプロジェクト一覧を取得する
+	ProjectRepository::Get()->EnumActiveProjects(in->mProjects);
+
+	UpdateProjectList();
 
 	UpdateStatus();
 	UpdateData(FALSE);
 
 	return TRUE;
+}
+
+void ProjectListDialog::UpdateProjectList()
+{
+	CListCtrl& list = in->mProjectListWnd;
+	list.DeleteAllItems();
+	int index = 0;
+	for (auto& prj : in->mProjects) {
+
+		// アーカイブ済のものは表示しない
+		if (prj->IsArchived()) {
+			continue;
+		}
+
+		const auto& code = prj->GetCode();
+		const auto& name = prj->GetName();
+
+		int n = list.InsertItem(index++, code);
+		list.SetItemText(n, 1, name);
+		list.SetItemText(n, 2, prj->mData.mStartDate);
+		list.SetItemText(n, 3, prj->mData.mEndDate);
+	}
 }
 
 bool ProjectListDialog::UpdateStatus()
@@ -98,30 +132,54 @@ void ProjectListDialog::OnButtonAdd()
 		return;
 	}
 
-	Project project;
-	dlg.GetProject(project);
+	ProjectData data;
+	dlg.GetProject(data);
 
-	in->mProjects.push_back(project);
+	auto newPrj = ProjectRepository::Get()->NewProject();
+	newPrj->mData = data;
 
-	// ToDo: リスト再構成
+	in->mProjects.push_back(newPrj);
+
+	UpdateProjectList();
+	UpdateStatus();
 }
 
 void ProjectListDialog::OnButtonEdit()
 {
-	// ToDo: プロジェクト編集ダイアログ(既存)
+	int n = in->GetSelectIndex();
+	if (n == -1) {
+		return;
+	}
+
+	auto prj = in->mProjects[n];
+
+	ProjectEditDialog dlg;
+	dlg.SetProject(prj->mData);
+	if (dlg.DoModal() != IDOK) {
+		return;
+	}
+
+	ProjectData data;
+	dlg.GetProject(prj->mData);
+
+	UpdateProjectList();
+	UpdateStatus();
 }
 
 void ProjectListDialog::OnButtonArchive()
 {
-	// ToDo: アーカイブするフラグを立てる
+	int n = in->GetSelectIndex();
+	if (n == -1) {
+		return;
+	}
 
-	//int selIndex = in->GetSelectedIndex();
-	//if (selIndex == -1) {
-	//	return;
-	//}
+	auto prj = in->mProjects[n];
+	prj->Archive();
 
-	//auto& project = in->mProjects[selIndex];
-	//project.SetArchiveFlag(true);
+	in->mProjects.erase(in->mProjects.begin() + n);
+
+	UpdateProjectList();
+	UpdateStatus();
 }
 
 void ProjectListDialog::OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult)
@@ -129,5 +187,15 @@ void ProjectListDialog::OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 	NM_LISTVIEW* pNMLV = (NM_LISTVIEW*)pNMHDR;
 	OnButtonEdit();
+}
+
+/**
+ *  リスト欄の要素の状態変更時の処理
+ */
+void ProjectListDialog::OnLvnItemChange(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	*pResult = 0;
+	UpdateStatus();
+	UpdateData(FALSE);
 }
 

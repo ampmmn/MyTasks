@@ -12,9 +12,7 @@ public:
 	ProjectListDialog();
 	virtual ~ProjectListDialog();
 
-	void SetProjects(const std::vector<Project>& projects);
-	void GetProjects(std::vector<Project>& projects);
-
+	void UpdateProjectList();
 	bool UpdateStatus();
 
 protected:
@@ -34,6 +32,8 @@ protected:
 	afx_msg void OnButtonEdit();
 	afx_msg void OnButtonArchive();
 	afx_msg void OnNMDblclk(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnLvnItemChange(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnHeaderClicked(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
 

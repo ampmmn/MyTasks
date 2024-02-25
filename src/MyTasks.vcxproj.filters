@@ -96,6 +96,15 @@
     <ClInclude Include="gui\DlgCtrlCommon.h">
       <Filter>gui</Filter>
     </ClInclude>
+    <ClInclude Include="core\ProjectRepository.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\ThemeRepository.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\ThemeDialog.h">
+      <Filter>gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -147,6 +156,18 @@
       <Filter>gui</Filter>
     </ClCompile>
     <ClCompile Include="gui\DlgCtrlCommon.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="core\ProjectRepository.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\ThemeRepository.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Theme.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\ThemeDialog.cpp">
       <Filter>gui</Filter>
     </ClCompile>
   </ItemGroup>

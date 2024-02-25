@@ -44,7 +44,9 @@ void SectionDialog::PImpl::ConvertSections(std::vector<Section>& sections)
 
 	Section section;
 	// 区分Aをセット
-	section.SetDisplayName(_T("A"));
+	if (mSections.size() > 0) {
+		section.SetDisplayName(mSections[0].mDisplayName);
+	}
 	isOK = section.SetStartTime(mStartTime);
 	isOK = section.SetEndTime(mEndTimeA);
 
@@ -55,7 +57,9 @@ void SectionDialog::PImpl::ConvertSections(std::vector<Section>& sections)
 	}
 
 	// 区分B
-	section.SetDisplayName(_T("B"));
+	if (mSections.size() > 1) {
+		section.SetDisplayName(mSections[1].mDisplayName);
+	}
 	isOK = section.SetStartTime(mEndTimeA);
 	isOK = section.SetEndTime(mEndTimeB);
 	sections.push_back(section);
@@ -64,7 +68,9 @@ void SectionDialog::PImpl::ConvertSections(std::vector<Section>& sections)
 		return ;
 	}
 	// 区分C
-	section.SetDisplayName(_T("C"));
+	if (mSections.size() > 2) {
+		section.SetDisplayName(mSections[2].mDisplayName);
+	}
 	isOK = section.SetStartTime(mEndTimeB);
 	isOK = section.SetEndTime(mEndTimeC);
 	sections.push_back(section);
@@ -73,7 +79,9 @@ void SectionDialog::PImpl::ConvertSections(std::vector<Section>& sections)
 		return ;
 	}
 	// 区分D
-	section.SetDisplayName(_T("D"));
+	if (mSections.size() > 3) {
+		section.SetDisplayName(mSections[3].mDisplayName);
+	}
 	isOK = section.SetStartTime(mEndTimeC);
 	isOK = section.SetEndTime(mEndTimeD);
 	sections.push_back(section);
@@ -82,7 +90,9 @@ void SectionDialog::PImpl::ConvertSections(std::vector<Section>& sections)
 		return ;
 	}
 	// 区分E
-	section.SetDisplayName(_T("E"));
+	if (mSections.size() > 4) {
+		section.SetDisplayName(mSections[4].mDisplayName);
+	}
 	isOK = section.SetStartTime(mEndTimeD);
 	isOK = section.SetEndTime(mEndTimeE);
 	sections.push_back(section);
@@ -91,7 +101,9 @@ void SectionDialog::PImpl::ConvertSections(std::vector<Section>& sections)
 		return ;
 	}
 	// 区分F
-	section.SetDisplayName(_T("F"));
+	if (mSections.size() > 5) {
+		section.SetDisplayName(mSections[5].mDisplayName);
+	}
 	isOK = section.SetStartTime(mEndTimeE);
 	isOK = section.SetEndTime(mEndTimeF);
 	sections.push_back(section);
@@ -100,7 +112,9 @@ void SectionDialog::PImpl::ConvertSections(std::vector<Section>& sections)
 		return ;
 	}
 	// 区分G
-	section.SetDisplayName(_T("G"));
+	if (mSections.size() > 6) {
+		section.SetDisplayName(mSections[6].mDisplayName);
+	}
 	isOK = section.SetStartTime(mEndTimeF);
 	isOK = section.SetEndTime(mEndTimeG);
 	sections.push_back(section);
@@ -109,7 +123,9 @@ void SectionDialog::PImpl::ConvertSections(std::vector<Section>& sections)
 		return ;
 	}
 	// 区分H
-	section.SetDisplayName(_T("H"));
+	if (mSections.size() > 7) {
+		section.SetDisplayName(mSections[7].mDisplayName);
+	}
 	isOK = section.SetStartTime(mEndTimeG);
 	isOK = section.SetEndTime(mEndTimeH);
 	sections.push_back(section);
@@ -140,13 +156,37 @@ void SectionDialog::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_STATIC_STATUSMSG, in->mMessage);
 	DDX_Text(pDX, IDC_EDIT_START_A, in->mStartTime);
+	if (in->mSections.size() > 0) {
+		DDX_Text(pDX, IDC_EDIT_DISPLAYNAME_A, in->mSections[0].mDisplayName);
+	}
 	DDX_Text(pDX, IDC_EDIT_END_A, in->mEndTimeA);
+	if (in->mSections.size() > 1) {
+		DDX_Text(pDX, IDC_EDIT_DISPLAYNAME_B, in->mSections[1].mDisplayName);
+	}
 	DDX_Text(pDX, IDC_EDIT_END_B, in->mEndTimeB);
+	if (in->mSections.size() > 2) {
+		DDX_Text(pDX, IDC_EDIT_DISPLAYNAME_C, in->mSections[2].mDisplayName);
+	}
 	DDX_Text(pDX, IDC_EDIT_END_C, in->mEndTimeC);
+	if (in->mSections.size() > 3) {
+		DDX_Text(pDX, IDC_EDIT_DISPLAYNAME_D, in->mSections[3].mDisplayName);
+	}
 	DDX_Text(pDX, IDC_EDIT_END_D, in->mEndTimeD);
+	if (in->mSections.size() > 4) {
+		DDX_Text(pDX, IDC_EDIT_DISPLAYNAME_E, in->mSections[4].mDisplayName);
+	}
 	DDX_Text(pDX, IDC_EDIT_END_E, in->mEndTimeE);
+	if (in->mSections.size() > 5) {
+		DDX_Text(pDX, IDC_EDIT_DISPLAYNAME_F, in->mSections[5].mDisplayName);
+	}
 	DDX_Text(pDX, IDC_EDIT_END_F, in->mEndTimeF);
+	if (in->mSections.size() > 6) {
+		DDX_Text(pDX, IDC_EDIT_DISPLAYNAME_G, in->mSections[6].mDisplayName);
+	}
 	DDX_Text(pDX, IDC_EDIT_END_G, in->mEndTimeG);
+	if (in->mSections.size() > 7) {
+		DDX_Text(pDX, IDC_EDIT_DISPLAYNAME_H, in->mSections[7].mDisplayName);
+	}
 	DDX_Text(pDX, IDC_EDIT_END_H, in->mEndTimeH);
 }
 

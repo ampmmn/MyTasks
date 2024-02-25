@@ -274,8 +274,10 @@
     <ClInclude Include="app\AppPreferenceListenerIF.h" />
     <ClInclude Include="app\Settings.h" />
     <ClInclude Include="core\Project.h" />
+    <ClInclude Include="core\ProjectRepository.h" />
     <ClInclude Include="core\Section.h" />
     <ClInclude Include="core\Task.h" />
+    <ClInclude Include="core\ThemeRepository.h" />
     <ClInclude Include="core\WorkItem.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="gui\AboutDialog.h" />
@@ -286,6 +288,7 @@
     <ClInclude Include="gui\ProjectListDialog.h" />
     <ClInclude Include="gui\SectionDialog.h" />
     <ClInclude Include="gui\TaskTray.h" />
+    <ClInclude Include="gui\ThemeDialog.h" />
     <ClInclude Include="MyTasks.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -298,8 +301,11 @@
     <ClCompile Include="app\AppPreference.cpp" />
     <ClCompile Include="app\Settings.cpp" />
     <ClCompile Include="core\Project.cpp" />
+    <ClCompile Include="core\ProjectRepository.cpp" />
     <ClCompile Include="core\Section.cpp" />
     <ClCompile Include="core\Task.cpp" />
+    <ClCompile Include="core\Theme.cpp" />
+    <ClCompile Include="core\ThemeRepository.cpp" />
     <ClCompile Include="core\WorkItem.cpp" />
     <ClCompile Include="gui\AboutDialog.cpp" />
     <ClCompile Include="gui\DateSelectDialog.cpp" />
@@ -309,6 +315,7 @@
     <ClCompile Include="gui\ProjectListDialog.cpp" />
     <ClCompile Include="gui\SectionDialog.cpp" />
     <ClCompile Include="gui\TaskTray.cpp" />
+    <ClCompile Include="gui\ThemeDialog.cpp" />
     <ClCompile Include="MyTasks.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

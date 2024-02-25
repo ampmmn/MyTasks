@@ -1,19 +1,16 @@
 #pragma once
 
 #include <memory>
-#include "core/Project.h"
+#include "core/Theme.h"
 
-class ProjectEditDialog : public CDialogEx
+class ThemeDialog : public CDialogEx
 {
 public:
-	struct ThemeItem;
+	ThemeDialog();
+	virtual ~ThemeDialog();
 
-public:
-	ProjectEditDialog();
-	virtual ~ProjectEditDialog();
-
-	void SetProject(const ProjectData& project);
-	void GetProject(ProjectData& theme);
+	void SetTheme(const ThemeData& theme);
+	void GetTheme(ThemeData& theme);
 
 	bool UpdateStatus();
 
@@ -30,8 +27,8 @@ public:
 protected:
 	virtual void OnOK();
 	DECLARE_MESSAGE_MAP()
-	afx_msg void OnUpdateStatus();
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+	afx_msg void OnUpdateStatus();
 };
 
 

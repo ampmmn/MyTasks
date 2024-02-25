@@ -7,7 +7,7 @@
 
 Task::Task() : mParent(nullptr), mCatalogItemID(0), mIsCompleted(false)
 {
-	// ToDo: mParent(Thema)
+	// ToDo: mParent(Theme)
 }
 
 Task::~Task()
