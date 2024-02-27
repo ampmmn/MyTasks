@@ -105,6 +105,9 @@
     <ClInclude Include="gui\ThemeDialog.h">
       <Filter>gui</Filter>
     </ClInclude>
+    <ClInclude Include="gui\ThemeListDialog.h">
+      <Filter>gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -168,6 +171,9 @@
       <Filter>core</Filter>
     </ClCompile>
     <ClCompile Include="gui\ThemeDialog.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\ThemeListDialog.cpp">
       <Filter>gui</Filter>
     </ClCompile>
   </ItemGroup>

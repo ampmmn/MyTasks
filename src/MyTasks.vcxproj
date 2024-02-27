@@ -289,6 +289,7 @@
     <ClInclude Include="gui\SectionDialog.h" />
     <ClInclude Include="gui\TaskTray.h" />
     <ClInclude Include="gui\ThemeDialog.h" />
+    <ClInclude Include="gui\ThemeListDialog.h" />
     <ClInclude Include="MyTasks.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -316,6 +317,7 @@
     <ClCompile Include="gui\SectionDialog.cpp" />
     <ClCompile Include="gui\TaskTray.cpp" />
     <ClCompile Include="gui\ThemeDialog.cpp" />
+    <ClCompile Include="gui\ThemeListDialog.cpp" />
     <ClCompile Include="MyTasks.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

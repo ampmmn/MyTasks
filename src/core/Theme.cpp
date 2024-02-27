@@ -45,3 +45,7 @@ void Theme::Delete()
 	mIsArchived = true;
 }
 
+bool Theme::IsArchived() const
+{
+	return mIsArchived;
+}

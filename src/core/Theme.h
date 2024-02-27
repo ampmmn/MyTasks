@@ -27,6 +27,7 @@ public:
 	uint32_t GetProjectID() const;
 
 	void Delete();
+	bool IsArchived() const;
 
 	// 内部管理用の連番
 	uint32_t mID;
