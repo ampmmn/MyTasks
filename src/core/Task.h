@@ -2,6 +2,7 @@
 #pragma once
 
 class Theme;
+class Category;
 
 // その日に実行するタスクを表すクラス
 // (タスクを実行したときの開始時間/終了時間/中断などはWorkItemクラスが持つ)
@@ -25,6 +26,8 @@ public:
 private:
 	// テーマ
 	Theme* mParent;
+	// カテゴリ
+	Category* mCategory;
 	// 題名
 	CString mSubject;
 	// 見積時間(分)

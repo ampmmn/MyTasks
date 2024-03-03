@@ -17,6 +17,13 @@
 #define IDD_THEME                       111
 #define IDD_PROJECT1                    112
 #define IDD_THEMES                      113
+#define IDD_CATEGORIES                  114
+#define IDD_CATEGORY                    115
+#define IDD_CALENDAR                    146
+#define IDD_NOOPDAYS                    149
+#define IDD_CATALOG                     151
+#define IDD_TASK                        153
+#define IDD_ROUTINEEDIT                 155
 #define IDC_LIST_TASKS                  1000
 #define IDC_STATIC_ALL                  1001
 #define IDC_STATIC_DONE                 1002
@@ -37,21 +44,39 @@
 #define IDC_EDIT_END_C                  1017
 #define IDC_BUTTON_ADD                  1018
 #define IDC_EDIT_DISPLAYNAME_F          1019
+#define IDC_LIST_CATEGORIES             1019
+#define IDC_BUTTON_ADD4                 1019
 #define IDC_DATETIMEPICKER1             1020
 #define IDC_EDIT_DISPLAYNAME_G          1021
 #define IDC_EDIT_END_D                  1022
 #define IDC_CHECK_TIMEFIXED             1023
 #define IDC_EDIT_DISPLAYNAME_H          1024
+#define IDC_LIST_CALENDAR               1024
 #define IDC_BUTTON_EDIT                 1025
 #define IDC_CHECK_AUTOSTART             1026
+#define IDC_BUTTON_UP                   1026
+#define IDC_LIST_CATALOG                1026
 #define IDC_EDIT1                       1027
+#define IDC_BUTTON_DOWN                 1027
+#define IDC_EDIT_LIST                   1027
+#define IDC_LIST_TASK                   1027
 #define IDC_EDIT_ID                     1028
+#define IDC_BUTTON_EDIT2                1028
 #define IDC_EDIT_NAME                   1029
+#define IDC_BUTTON_COPY                 1029
 #define IDC_CHECK_TIMEFIXED3            1030
+#define IDC_BUTTON_EDIT3                1030
+#define IDC_CHECK_FIXEDTIME             1030
 #define IDC_EDIT6                       1031
+#define IDC_EDIT_ESTIMETEDTIME          1031
 #define IDC_EDIT_DESCRIPTION            1032
+#define IDC_EDIT_ACTION                 1032
+#define IDC_LIST1                       1032
+#define IDC_LIST_ROUTINE                1032
 #define IDC_CHECK_AUTOEND               1033
+#define IDC_EDIT_ACTION2                1033
 #define IDC_EDIT_END_E                  1034
+#define IDC_EDIT_ACTION3                1034
 #define IDC_COMBO_THEME                 1035
 #define IDC_EDIT2                       1036
 #define IDC_EDIT_CODE                   1037
@@ -77,6 +102,8 @@
 #define IDC_LIST_THEME2                 1057
 #define IDC_BUTTON_ADD3                 1058
 #define IDC_BUTTON_DELETE               1059
+#define IDC_BUTTON_DELETE2              1060
+#define IDC_BUTTON_DELETE3              1061
 #define ID_VIEW_SETTINGS                32571
 #define ID_HELP_ABOUT                   32772
 #define ID_TASKS                        32773
@@ -137,9 +164,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        146
+#define _APS_NEXT_RESOURCE_VALUE        157
 #define _APS_NEXT_COMMAND_VALUE         32826
-#define _APS_NEXT_CONTROL_VALUE         1019
+#define _APS_NEXT_CONTROL_VALUE         1033
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

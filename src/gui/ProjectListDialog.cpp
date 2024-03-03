@@ -135,10 +135,14 @@ void ProjectListDialog::OnButtonAdd()
 	ProjectData data;
 	dlg.GetProject(data);
 
-	auto newPrj = ProjectRepository::Get()->NewProject();
+	auto repos = ProjectRepository::Get();
+	auto newPrj = repos->NewProject();
 	newPrj->mData = data;
 
+	repos->Save();
+
 	in->mProjects.push_back(newPrj);
+	
 
 	UpdateProjectList();
 	UpdateStatus();
@@ -162,6 +166,8 @@ void ProjectListDialog::OnButtonEdit()
 	ProjectData data;
 	dlg.GetProject(prj->mData);
 
+	ProjectRepository::Get()->Save();
+
 	UpdateProjectList();
 	UpdateStatus();
 }
@@ -175,6 +181,8 @@ void ProjectListDialog::OnButtonArchive()
 
 	auto prj = in->mProjects[n];
 	prj->Archive();
+
+	ProjectRepository::Get()->Save();
 
 	in->mProjects.erase(in->mProjects.begin() + n);
 

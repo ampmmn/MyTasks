@@ -273,6 +273,9 @@
     <ClInclude Include="app\AppPreference.h" />
     <ClInclude Include="app\AppPreferenceListenerIF.h" />
     <ClInclude Include="app\Settings.h" />
+    <ClInclude Include="core\Calendar.h" />
+    <ClInclude Include="core\Category.h" />
+    <ClInclude Include="core\CategoryRepository.h" />
     <ClInclude Include="core\Project.h" />
     <ClInclude Include="core\ProjectRepository.h" />
     <ClInclude Include="core\Section.h" />
@@ -281,11 +284,16 @@
     <ClInclude Include="core\WorkItem.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="gui\AboutDialog.h" />
+    <ClInclude Include="gui\CalendarDialog.h" />
+    <ClInclude Include="gui\CategoryDialog.h" />
+    <ClInclude Include="gui\CategoryListDialog.h" />
     <ClInclude Include="gui\DateSelectDialog.h" />
     <ClInclude Include="gui\DlgCtrlCommon.h" />
     <ClInclude Include="gui\MyTasksDialog.h" />
+    <ClInclude Include="gui\NoOperationDayDialog.h" />
     <ClInclude Include="gui\ProjectEditDialog.h" />
     <ClInclude Include="gui\ProjectListDialog.h" />
+    <ClInclude Include="gui\RoutineEditDialog.h" />
     <ClInclude Include="gui\SectionDialog.h" />
     <ClInclude Include="gui\TaskTray.h" />
     <ClInclude Include="gui\ThemeDialog.h" />
@@ -295,12 +303,16 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="utility\Accessibility.h" />
+    <ClInclude Include="utility\IniFile.h" />
     <ClInclude Include="utility\ScopeAttachThreadInput.h" />
     <ClInclude Include="utility\SharedHwnd.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="app\AppPreference.cpp" />
     <ClCompile Include="app\Settings.cpp" />
+    <ClCompile Include="core\Calendar.cpp" />
+    <ClCompile Include="core\Category.cpp" />
+    <ClCompile Include="core\CategoryRepository.cpp" />
     <ClCompile Include="core\Project.cpp" />
     <ClCompile Include="core\ProjectRepository.cpp" />
     <ClCompile Include="core\Section.cpp" />
@@ -309,11 +321,16 @@
     <ClCompile Include="core\ThemeRepository.cpp" />
     <ClCompile Include="core\WorkItem.cpp" />
     <ClCompile Include="gui\AboutDialog.cpp" />
+    <ClCompile Include="gui\CalendarDialog.cpp" />
+    <ClCompile Include="gui\CategoryDialog.cpp" />
+    <ClCompile Include="gui\CategoryListDialog.cpp" />
     <ClCompile Include="gui\DateSelectDialog.cpp" />
     <ClCompile Include="gui\DlgCtrlCommon.cpp" />
     <ClCompile Include="gui\MyTasksDialog.cpp" />
+    <ClCompile Include="gui\NoOperationDayDialog.cpp" />
     <ClCompile Include="gui\ProjectEditDialog.cpp" />
     <ClCompile Include="gui\ProjectListDialog.cpp" />
+    <ClCompile Include="gui\RoutineEditDialog.cpp" />
     <ClCompile Include="gui\SectionDialog.cpp" />
     <ClCompile Include="gui\TaskTray.cpp" />
     <ClCompile Include="gui\ThemeDialog.cpp" />
@@ -328,6 +345,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="utility\Accessibility.cpp" />
+    <ClCompile Include="utility\IniFile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MyTasks.rc" />

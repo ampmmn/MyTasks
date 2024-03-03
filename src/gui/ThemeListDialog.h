@@ -31,7 +31,6 @@ protected:
 	afx_msg void OnButtonAdd();
 	afx_msg void OnButtonEdit();
 	afx_msg void OnButtonArchive();
-	afx_msg void OnNMDblclkProject(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnItemChangeProject(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnHeaderClickedProject(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNMDblclkTheme(NMHDR *pNMHDR, LRESULT *pResult);

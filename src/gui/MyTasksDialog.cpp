@@ -11,6 +11,9 @@
 #include "gui/DateSelectDialog.h"
 #include "gui/ProjectListDialog.h"
 #include "gui/ThemeListDialog.h"
+#include "gui/CategoryListDialog.h"
+#include "gui/CalendarDialog.h"
+#include "gui/RoutineEditDialog.h"
 #include "gui/DlgCtrlCommon.h"
 
 #include "core/Section.h"
@@ -113,6 +116,7 @@ BEGIN_MESSAGE_MAP(MyTasksDialog, CDialogEx)
 	ON_COMMAND(ID_SETTING_SECTION, OnSettingSection)
 	ON_COMMAND(ID_SETTING_PROJECTS, OnSettingProjects)
 	ON_COMMAND(ID_SETTING_THEMES, OnSettingThemes)
+	ON_COMMAND(ID_SETTING_CATEGORIES, OnSettingCategories)
 	ON_COMMAND(ID_SETTING_TASKCATALOG, OnSettingTaskCatalog)
 	ON_COMMAND(ID_SETTING_CALENDAR, OnSettingCalendar)
 	ON_COMMAND(ID_SETTING_APP, OnSettingApp)
@@ -507,6 +511,10 @@ void MyTasksDialog::OnUpdateViewTimeUnit(CCmdUI* cmdUI)
 
 void MyTasksDialog::OnSettingRoutine()
 {
+	RoutineEditDialog dlg;
+	if (dlg.DoModal() != IDOK) {
+		return;
+	}
 }
 
 void MyTasksDialog::OnSettingSection()
@@ -531,33 +539,28 @@ void MyTasksDialog::OnSettingSection()
 void MyTasksDialog::OnSettingProjects()
 {
 	ProjectListDialog dlg;
-
-	// ToDo: プロジェクトのリストをダイアログにセット
-
 	if(dlg.DoModal() != IDOK) {
 		return;
 	}
-	// ToDo: プロジェクトのリストをダイアログから受け取る
-
-	// ToDo: 保存
-
 	// ToDo: 再計算
 }
 
 void MyTasksDialog::OnSettingThemes()
 {
 	ThemeListDialog dlg;
-
-	// ToDo: プロジェクトのリストをダイアログにセット
-
 	if(dlg.DoModal() != IDOK) {
 		return;
 	}
-	// ToDo: プロジェクトのリストをダイアログから受け取る
-
-	// ToDo: 保存
 
 	// ToDo: 再計算
+}
+
+void MyTasksDialog::OnSettingCategories()
+{
+	CategoryListDialog dlg;
+	if(dlg.DoModal() != IDOK) {
+		return;
+	}
 }
 
 
@@ -567,6 +570,10 @@ void MyTasksDialog::OnSettingTaskCatalog()
 
 void MyTasksDialog::OnSettingCalendar()
 {
+	CalendarDialog dlg;
+	if (dlg.DoModal() != IDOK) {
+		return;
+	}
 }
 
 void MyTasksDialog::OnSettingApp()

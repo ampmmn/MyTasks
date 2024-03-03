@@ -108,6 +108,33 @@
     <ClInclude Include="gui\ThemeListDialog.h">
       <Filter>gui</Filter>
     </ClInclude>
+    <ClInclude Include="core\Category.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\CategoryRepository.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\CategoryListDialog.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\CategoryDialog.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\CalendarDialog.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\NoOperationDayDialog.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Calendar.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\IniFile.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\RoutineEditDialog.h">
+      <Filter>gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -174,6 +201,33 @@
       <Filter>gui</Filter>
     </ClCompile>
     <ClCompile Include="gui\ThemeListDialog.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Category.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\CategoryRepository.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\CategoryListDialog.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\CategoryDialog.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\CalendarDialog.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\NoOperationDayDialog.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Calendar.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="utility\IniFile.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\RoutineEditDialog.cpp">
       <Filter>gui</Filter>
     </ClCompile>
   </ItemGroup>

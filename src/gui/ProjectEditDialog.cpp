@@ -56,9 +56,30 @@ BEGIN_MESSAGE_MAP(ProjectEditDialog, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT_CODE, OnUpdateStatus)
 END_MESSAGE_MAP()
 
+static CTime GetDateFromString(const CString& dateStr)
+{
+	int y, m, d;
+	if (_stscanf_s(dateStr, _T("%04d/%02d/%02d"), &y, &m, &d) != 3) {
+		return CTime::GetCurrentTime();
+	}
+	CTime tm(y,m,d, 0, 0, 0);
+	return tm;
+}
+
+
+
 BOOL ProjectEditDialog::OnInitDialog()
 {
 	__super::OnInitDialog();
+
+	// 開始・終了日の初期設定
+	CTime tm;
+	CDateTimeCtrl* st = (CDateTimeCtrl*)GetDlgItem(IDC_EDIT_STARTDATE);
+	tm = GetDateFromString(in->mProject.mStartDate);
+	st->SetTime(&tm);
+	CDateTimeCtrl* et = (CDateTimeCtrl*)GetDlgItem(IDC_EDIT_ENDDATE);
+	tm = GetDateFromString(in->mProject.mEndDate);
+	et->SetTime(&tm);
 
 	UpdateStatus();
 	UpdateData(FALSE);

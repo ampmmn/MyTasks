@@ -64,6 +64,7 @@ protected:
 	afx_msg void OnSettingSection();
 	afx_msg void OnSettingProjects();
 	afx_msg void OnSettingThemes();
+	afx_msg void OnSettingCategories();
 	afx_msg void OnSettingTaskCatalog();
 	afx_msg void OnSettingCalendar();
 	afx_msg void OnSettingApp();
