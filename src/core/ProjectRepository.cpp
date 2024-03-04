@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ProjectRepository.h"
 #include "Project.h"
-#include "utility/IniFile.h"
+#include "utility/DataFile.h"
 #include <map>
 
 #ifdef _DEBUG
@@ -47,60 +47,79 @@ ProjectRepository* ProjectRepository::Get()
 
 void ProjectRepository::Save()
 {
-	CIniFile ini;
-	ini.Open(GetProjectSettingFilePath());
+	DataFile file;
+	file.SetFilePath(GetProjectSettingFilePath());
 
-	ini.Write(_T("Repository"), _T("NextID"), (int)in->mNextProjectID);
+	auto entry = file.NewEntry(_T("Repository"));
+	file.Set(entry, _T("NextID"), (int)in->mNextProjectID);
 
 	CString sectionName;
 
 	int count = (int)in->mProjectList.size();
-	ini.Write(_T("Repository"), _T("ProjectCount"), count);
+	file.Set(entry, _T("ProjectCount"), count);
 
 	for (int i = 0; i < count; ++i) {
 
 		sectionName.Format(_T("Project%d"), i+1);
+
+		entry = file.NewEntry(sectionName);
 
 		auto& prj = in->mProjectList[i];
 
 		// プロジェクトID(内部管理用)
-		ini.Write(sectionName, _T("ID"), (int)prj->GetID());
+		file.Set(entry, _T("ID"), (int)prj->GetID());
 
 		const auto& data = prj->mData;
 
 		// プロジェクト識別子
-		ini.Write(sectionName, _T("Code"), data.mCode);
+		file.Set(entry, _T("Code"), data.mCode);
 		// プロジェクト名
-		ini.Write(sectionName, _T("DisplayName"), data.mName);
+		file.Set(entry, _T("DisplayName"), data.mName);
 
 		// 開始日
-		ini.Write(sectionName, _T("StartDate"), data.mStartDate);
+		file.Set(entry, _T("StartDate"), data.mStartDate);
 		// 終了日
-		ini.Write(sectionName, _T("EndDate"), data.mEndDate);
+		file.Set(entry, _T("EndDate"), data.mEndDate);
 		// 説明
-		ini.Write(sectionName, _T("Description"), data.mDescription);
+		file.Set(entry, _T("Description"), data.mDescription);
 
-		ini.Write(sectionName, _T("IsArchived"), prj->IsArchived() ? 1 : 0);
+		file.Set(entry, _T("IsArchived"), prj->IsArchived() ? 1 : 0);
 	}
+
+	file.Save();
 }
 
 void ProjectRepository::Load()
 {
-	CIniFile ini;
-	ini.Open(GetProjectSettingFilePath());
+	DataFile file;
+	file.SetFilePath(GetProjectSettingFilePath());
+	if (file.Load() == false) {
+		return;
+	}
 
-	in->mNextProjectID = ini.GetInt(_T("Repository"), _T("NextID"), 1);
+	auto entry = file.FindEntry(_T("Repository"));
+	if (entry == nullptr) {
+		return;
+	}
+
+
+	in->mNextProjectID = file.Get(entry, _T("NextID"), 1);
 
 	CString sectionName;
 	CString sectionKey;
 
-	int count = ini.GetInt(_T("Repository"), _T("ProjectCount"), 0);
+	int count = file.Get(entry, _T("ProjectCount"), 0);
 	for (int i = 0; i < count; ++i) {
 
 		sectionName.Format(_T("Project%d"), i+1);
 
+		entry = file.FindEntry(sectionName);
+		if (entry == nullptr) {
+			continue;
+		}
+
 		// プロジェクトID(内部管理用)
-		int id = ini.GetInt(sectionName, _T("ID"), 0);
+		int id = file.Get(entry, _T("ID"), 0);
 		if (id == 0) {
 			continue;
 		}
@@ -108,26 +127,26 @@ void ProjectRepository::Load()
 		ProjectData data;
 
 		// プロジェクト識別子
-		data.mCode = ini.GetString(sectionName, _T("Code"), _T(""));
+		data.mCode = file.Get(entry, _T("Code"), _T(""));
 		if (data.mCode.IsEmpty()) {
 			continue;
 		}
 
 		// プロジェクト名
-		data.mName = ini.GetString(sectionName, _T("DisplayName"), _T(""));
+		data.mName = file.Get(entry, _T("DisplayName"), _T(""));
 		if (data.mName.IsEmpty()) {
 			continue;
 		}
 
 		// 開始日
-		data.mStartDate = ini.GetString(sectionName, _T("StartDate"), _T(""));
+		data.mStartDate = file.Get(entry, _T("StartDate"), _T(""));
 		// 終了日
-		data.mEndDate = ini.GetString(sectionName, _T("EndDate"), _T(""));
+		data.mEndDate = file.Get(entry, _T("EndDate"), _T(""));
 		// 説明
-		data.mDescription = ini.GetString(sectionName, _T("Description"), _T(""));
+		data.mDescription = file.Get(entry, _T("Description"), _T(""));
 
 		// アーカイブフラグ
-		bool isArchived = ini.GetInt(sectionName, _T("IsArchived"), 0) != 0;
+		bool isArchived = file.Get(entry, _T("IsArchived"), 0) != 0;
 
 		std::unique_ptr<Project> prj(new Project);
 		prj->mID = id;

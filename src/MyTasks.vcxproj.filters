@@ -129,11 +129,11 @@
     <ClInclude Include="core\Calendar.h">
       <Filter>core</Filter>
     </ClInclude>
-    <ClInclude Include="utility\IniFile.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="gui\RoutineEditDialog.h">
       <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\DataFile.h">
+      <Filter>utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -224,11 +224,11 @@
     <ClCompile Include="core\Calendar.cpp">
       <Filter>core</Filter>
     </ClCompile>
-    <ClCompile Include="utility\IniFile.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="gui\RoutineEditDialog.cpp">
       <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="utility\DataFile.cpp">
+      <Filter>utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
