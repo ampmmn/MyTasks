@@ -151,9 +151,14 @@ void CategoryListDialog::OnButtonAdd()
 	CategoryData data;
 	dlg.GetCategory(data);
 
-	auto newCat = CategoryRepository::Get()->NewCategory();
+	auto repos = CategoryRepository::Get();
+
+	auto newCat = repos->NewCategory();
 	newCat->mData = data;
 	newCat->mData.mOrder = (int)in->mCategories.size();
+
+	repos->Save();
+
 
 	in->mCategories.push_back(newCat);
 
@@ -178,6 +183,8 @@ void CategoryListDialog::OnButtonEdit()
 
 	dlg.GetCategory(cat->mData);
 
+	CategoryRepository::Get()->Save();
+
 	UpdateCategoryList();
 	UpdateStatus();
 }
@@ -191,6 +198,8 @@ void CategoryListDialog::OnButtonArchive()
 
 	auto cat = in->mCategories[n];
 	cat->Archive();
+
+	CategoryRepository::Get()->Save();
 
 	in->mCategories.erase(in->mCategories.begin() + n);
 
@@ -256,6 +265,7 @@ void CategoryListDialog::SwapItem(int srcIndex, int dstIndex)
 
 	std::swap(in->mCategories[srcIndex], in->mCategories[dstIndex]);
 	std::swap(in->mCategories[srcIndex]->mData.mOrder, in->mCategories[dstIndex]->mData.mOrder);
+	CategoryRepository::Get()->Save();
 
 }
 

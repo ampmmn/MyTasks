@@ -1,11 +1,21 @@
 #include "pch.h"
 #include "CategoryRepository.h"
 #include "Category.h"
+#include "utility/DataFile.h"
 #include <stdint.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
+
+static CString GetCategorySettingFilePath()
+{
+	TCHAR path[MAX_PATH_NTFS];
+	GetModuleFileName(nullptr, path, MAX_PATH_NTFS);
+	PathRemoveFileSpec(path);
+	PathAppend(path, _T("category.dat"));
+	return path;
+}
 
 struct CategoryRepository::PImpl
 {
@@ -17,6 +27,8 @@ struct CategoryRepository::PImpl
 CategoryRepository::CategoryRepository() : in(new PImpl)
 {
 	in->mNextCategoryID = 1;
+
+	Load();
 }
 
 CategoryRepository::~CategoryRepository()
@@ -34,13 +46,86 @@ CategoryRepository* CategoryRepository::Get()
 
 void CategoryRepository::Save()
 {
-	// ToDo: 実装
+	DataFile file;
+	file.SetFilePath(GetCategorySettingFilePath());
+
+	auto entry = file.NewEntry(_T("Repository"));
+	file.Set(entry, _T("NextCategoryID"), (int)in->mNextCategoryID);
+
+	CString sectionName;
+
+	int count = (int)in->mCategoryList.size();
+	file.Set(entry, _T("CategoryCount"), count);
+
+	for (int i = 0; i < count; ++i) {
+
+		sectionName.Format(_T("Category%d"), i+1);
+
+		entry = file.NewEntry(sectionName);
+
+		auto& cat = in->mCategoryList[i];
+
+		// プロジェクトID(内部管理用)
+		file.Set(entry, _T("ID"), (int)cat->GetID());
+
+		const auto& data = cat->mData;
+
+		// 表示名称
+		file.Set(entry, _T("DisplayName"), data.mDisplayName);
+		// 説明
+		file.Set(entry, _T("Description"), data.mDescription);
+		// 順序
+		file.Set(entry, _T("Order"), data.mOrder);
+
+		file.Set(entry, _T("IsArchived"), cat->IsArchived() ? 1 : 0);
+	}
+
+	file.Save();
 }
 
 void CategoryRepository::Load()
 {
-	// ToDo: 実装
-	// ToDo: mNextCategoryIDの復元
+	DataFile file;
+	file.SetFilePath(GetCategorySettingFilePath());
+	file.Load();
+
+	auto entry = file.FindEntry(_T("Repository"));
+	if (entry == nullptr) {
+		return;
+	}
+
+	in->mNextCategoryID = file.Get(entry, _T("NextCategoryID"), 1);
+
+	CString sectionName;
+
+	int count = file.Get(entry, _T("CategoryCount"), 0);
+
+	for (int i = 0; i < count; ++i) {
+
+		sectionName.Format(_T("Category%d"), i+1);
+
+		entry = file.FindEntry(sectionName);
+
+		// プロジェクトID(内部管理用)
+		std::unique_ptr<Category> cat(new Category);
+
+		cat->mID = file.Get(entry, _T("ID"), 0);
+		if (cat->mID == 0) {
+			continue;
+		}
+
+		auto& data = cat->mData;
+		// 表示名称
+		data.mDisplayName = file.Get(entry, _T("DisplayName"), _T(""));
+		// 説明
+		data.mDescription = file.Get(entry, _T("Description"), _T(""));
+		// 順序
+		data.mOrder = file.Get(entry, _T("Order"), 0);
+
+		cat->mIsArchived = file.Get(entry, _T("IsArchived"), false);
+
+		in->mCategoryList.push_back(cat.release());
+	}
 }
 
 Category* CategoryRepository::NewCategory()
