@@ -14,6 +14,7 @@
 #include "gui/CategoryListDialog.h"
 #include "gui/CalendarDialog.h"
 #include "gui/RoutineEditDialog.h"
+#include "gui/TaskEditDialog.h"
 #include "gui/DlgCtrlCommon.h"
 
 #include "core/Section.h"
@@ -103,7 +104,8 @@ BEGIN_MESSAGE_MAP(MyTasksDialog, CDialogEx)
 	ON_COMMAND(ID_TASK_SUSPEND, OnTaskSuspend)
 	ON_COMMAND(ID_TASK_BREAKDOWN, OnTaskBreakDown)
 	ON_COMMAND(ID_TASK_ESTIMATEMANUALLY, OnTaskEstimateManually)
-	ON_COMMAND(ID_TASK_INTERRUPT, OnTaskEstimateInterrupt)
+	ON_COMMAND(ID_TASK_INTERRUPT, OnTaskInterrupt)
+	ON_COMMAND(ID_TASK_ADD, OnTaskAdd)
 	ON_COMMAND(ID_DATE_TODAY, OnDateToday)
 	ON_COMMAND(ID_DATE_NEXT, OnDateNext)
 	ON_COMMAND(ID_DATE_PREV, OnDatePrev)
@@ -442,8 +444,16 @@ void MyTasksDialog::OnTaskEstimateManually()
 {
 }
 
-void MyTasksDialog::OnTaskEstimateInterrupt()
+void MyTasksDialog::OnTaskInterrupt()
 {
+}
+
+void MyTasksDialog::OnTaskAdd()
+{
+	TaskEditDialog dlg;
+	if (dlg.DoModal() != IDOK) {
+		return;
+	}
 }
 
 void MyTasksDialog::OnDateToday()

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ProjectRepository.h"
-#include "Project.h"
+#include "core/Profile.h"
+#include "core/Project.h"
 #include "utility/DataFile.h"
 #include <map>
 
@@ -8,14 +9,11 @@
 #define new DEBUG_NEW
 #endif
 
+using Profile = mytasks::core::Profile;
 
 static CString GetProjectSettingFilePath()
 {
-	TCHAR path[MAX_PATH_NTFS];
-	GetModuleFileName(nullptr, path, MAX_PATH_NTFS);
-	PathRemoveFileSpec(path);
-	PathAppend(path, _T("projects.dat"));
-	return path;
+	return Profile::Get()->GetFilePath(_T("projects.dat"));
 }
 
 struct ProjectRepository::PImpl

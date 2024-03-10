@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CategoryRepository.h"
+#include "core/Profile.h"
 #include "Category.h"
 #include "utility/DataFile.h"
 #include <stdint.h>
@@ -8,13 +9,11 @@
 #define new DEBUG_NEW
 #endif
 
+using Profile = mytasks::core::Profile;
+
 static CString GetCategorySettingFilePath()
 {
-	TCHAR path[MAX_PATH_NTFS];
-	GetModuleFileName(nullptr, path, MAX_PATH_NTFS);
-	PathRemoveFileSpec(path);
-	PathAppend(path, _T("category.dat"));
-	return path;
+	return Profile::Get()->GetFilePath(_T("category.dat"));
 }
 
 struct CategoryRepository::PImpl

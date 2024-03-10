@@ -51,7 +51,8 @@ protected:
 	afx_msg void OnTaskSuspend();
 	afx_msg void OnTaskBreakDown();
 	afx_msg void OnTaskEstimateManually();
-	afx_msg void OnTaskEstimateInterrupt();
+	afx_msg void OnTaskInterrupt();
+	afx_msg void OnTaskAdd();
 	afx_msg void OnDateToday();
 	afx_msg void OnDateNext();
 	afx_msg void OnDatePrev();

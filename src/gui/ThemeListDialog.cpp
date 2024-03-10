@@ -208,9 +208,13 @@ void ThemeListDialog::OnButtonAdd()
 	ThemeData data;
 	dlg.GetTheme(data);
 
-	auto newTheme = ThemeRepository::Get()->IssueTheme();
+	auto repos = ThemeRepository::Get();
+
+	auto newTheme = repos->IssueTheme();
 	newTheme->mData = data;
 	newTheme->mProjectID = prj->GetID();
+
+	repos->Save();
 
 	in->mThemeMap[prj].push_back(newTheme);
 
@@ -246,6 +250,8 @@ void ThemeListDialog::OnButtonEdit()
 
 	dlg.GetTheme(theme->mData);
 
+	ThemeRepository::Get()->Save();
+
 	UpdateThemeList();
 	UpdateStatus();
 }
@@ -270,6 +276,8 @@ void ThemeListDialog::OnButtonArchive()
 
 	auto& theme = themes[n];
 	theme->Delete();
+
+	ThemeRepository::Get()->Save();
 
 	UpdateThemeList();
 	UpdateStatus();

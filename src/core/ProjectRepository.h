@@ -2,8 +2,7 @@
 
 #include <memory>
 #include <vector>
-
-class Project;
+#include "core/Project.h"
 
 class ProjectRepository
 {

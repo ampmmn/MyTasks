@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-class Category;
+#include "core/Category.h"
 
 class CategoryRepository
 {

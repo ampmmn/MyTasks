@@ -276,6 +276,7 @@
     <ClInclude Include="core\Calendar.h" />
     <ClInclude Include="core\Category.h" />
     <ClInclude Include="core\CategoryRepository.h" />
+    <ClInclude Include="core\Profile.h" />
     <ClInclude Include="core\Project.h" />
     <ClInclude Include="core\ProjectRepository.h" />
     <ClInclude Include="core\Section.h" />
@@ -295,6 +296,7 @@
     <ClInclude Include="gui\ProjectListDialog.h" />
     <ClInclude Include="gui\RoutineEditDialog.h" />
     <ClInclude Include="gui\SectionDialog.h" />
+    <ClInclude Include="gui\TaskEditDialog.h" />
     <ClInclude Include="gui\TaskTray.h" />
     <ClInclude Include="gui\ThemeDialog.h" />
     <ClInclude Include="gui\ThemeListDialog.h" />
@@ -313,6 +315,7 @@
     <ClCompile Include="core\Calendar.cpp" />
     <ClCompile Include="core\Category.cpp" />
     <ClCompile Include="core\CategoryRepository.cpp" />
+    <ClCompile Include="core\Profile.cpp" />
     <ClCompile Include="core\Project.cpp" />
     <ClCompile Include="core\ProjectRepository.cpp" />
     <ClCompile Include="core\Section.cpp" />
@@ -332,6 +335,7 @@
     <ClCompile Include="gui\ProjectListDialog.cpp" />
     <ClCompile Include="gui\RoutineEditDialog.cpp" />
     <ClCompile Include="gui\SectionDialog.cpp" />
+    <ClCompile Include="gui\TaskEditDialog.cpp" />
     <ClCompile Include="gui\TaskTray.cpp" />
     <ClCompile Include="gui\ThemeDialog.cpp" />
     <ClCompile Include="gui\ThemeListDialog.cpp" />

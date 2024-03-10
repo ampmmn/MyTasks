@@ -1,9 +1,9 @@
 #pragma once
 
 #include <memory>
+#include "core/Theme.h"
 
 class Project;
-class Theme;
 
 class ThemeRepository
 {
@@ -19,6 +19,8 @@ public:
 
 	Theme* IssueTheme();
 	void EnumThemes(Project* prj, std::vector<Theme*>& themes);
+	void EnumThemes(uint32_t prjID, std::vector<Theme*>& themes);
+	void EnumActiveThemes(uint32_t prjID, std::vector<Theme*>& themes);
 
 private:
 	struct PImpl;

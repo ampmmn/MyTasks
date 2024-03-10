@@ -135,6 +135,12 @@
     <ClInclude Include="utility\DataFile.h">
       <Filter>utility</Filter>
     </ClInclude>
+    <ClInclude Include="core\Profile.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\TaskEditDialog.h">
+      <Filter>gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -229,6 +235,12 @@
     </ClCompile>
     <ClCompile Include="utility\DataFile.cpp">
       <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Profile.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\TaskEditDialog.cpp">
+      <Filter>gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
