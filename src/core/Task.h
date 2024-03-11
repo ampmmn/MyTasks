@@ -7,6 +7,9 @@ class Category;
 class TaskParam
 {
 public:
+	TaskParam();
+	TaskParam(const TaskParam&) = default;
+
 	// 題名
 	CString mSubject;
 	// プロジェクトID
@@ -44,6 +47,7 @@ public:
 	~Task();
 
 public:
+	uint32_t GetID() const;
 	// 題名を取得する
 	CString GetSubject() const;
 	// 題名を設定する
@@ -54,13 +58,18 @@ public:
 	// 見積時間を取得する
 	uint32_t GetEstimatedMinutes() const;
 
-private:
+	bool IsArchived() const;
+
+public:
 	// 内部管理用ID
 	uint32_t mID;
 
-	TaskParam mParam;
-
 	// カタログ上の対応する要素ID(カタログからロードした場合。そうでない場合は0)
 	uint32_t mCatalogItemID;
+
+	// アーカイブ済か?
+	bool mIsArchived;
+
+	TaskParam mParam;
 };
 

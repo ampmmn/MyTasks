@@ -281,6 +281,7 @@
     <ClInclude Include="core\ProjectRepository.h" />
     <ClInclude Include="core\Section.h" />
     <ClInclude Include="core\Task.h" />
+    <ClInclude Include="core\TaskRepository.h" />
     <ClInclude Include="core\ThemeRepository.h" />
     <ClInclude Include="core\WorkItem.h" />
     <ClInclude Include="framework.h" />
@@ -320,6 +321,7 @@
     <ClCompile Include="core\ProjectRepository.cpp" />
     <ClCompile Include="core\Section.cpp" />
     <ClCompile Include="core\Task.cpp" />
+    <ClCompile Include="core\TaskRepository.cpp" />
     <ClCompile Include="core\Theme.cpp" />
     <ClCompile Include="core\ThemeRepository.cpp" />
     <ClCompile Include="core\WorkItem.cpp" />

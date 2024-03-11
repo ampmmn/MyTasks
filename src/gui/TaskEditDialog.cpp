@@ -23,6 +23,8 @@ struct TaskEditDialog::LISTITEM
 struct TaskEditDialog::PImpl
 {
 	int GetCurrentProjectID();
+	int GetCurrentThemeID();
+	int GetCurrentCategoryID();
 
 	// プロジェクト一覧のリストコントロールを取得する
 	CComboBox mProjectListWnd;
@@ -54,6 +56,22 @@ int TaskEditDialog::PImpl::GetCurrentProjectID()
 	return mProjectItems[mProjectIndex].mID;
 }
 
+int TaskEditDialog::PImpl::GetCurrentThemeID()
+{
+	if (mThemeIndex < 0 || (int)mThemeItems.size() <= mThemeIndex) {
+		return 0;
+	}
+	return mThemeItems[mThemeIndex].mID;
+}
+
+int TaskEditDialog::PImpl::GetCurrentCategoryID()
+{
+	if (mCategoryIndex < 0 || (int)mCategoryItems.size() <= mCategoryIndex) {
+		return 0;
+	}
+	return mCategoryItems[mCategoryIndex].mID;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -68,7 +86,7 @@ TaskEditDialog::TaskEditDialog() :
 	in->mCategoryIndex = 0;
 
 	// ToDo: アプリ設定でタスク所要時間の初期値を設定できるようにする
-	in->mParam.mEstimatedMinutes = 10;
+	//in->mParam.mEstimatedMinutes = 10;
 }
 
 TaskEditDialog::~TaskEditDialog()
@@ -281,6 +299,11 @@ void TaskEditDialog::OnOK()
 	if (UpdateStatus() == false) {
 		return ;
 	}
+
+	in->mParam.mProjectID = in->GetCurrentProjectID();
+	in->mParam.mThemeID = in->GetCurrentThemeID();
+	in->mParam.mCategoryID = in->GetCurrentCategoryID();
+
 	__super::OnOK();
 }
 

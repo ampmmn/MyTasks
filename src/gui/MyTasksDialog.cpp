@@ -18,6 +18,7 @@
 #include "gui/DlgCtrlCommon.h"
 
 #include "core/Section.h"
+#include "core/TaskRepository.h"
 
 #include "app/AppPreference.h"
 
@@ -39,7 +40,9 @@ static UINT TIMERID_SECTION = 1;
 
 struct MyTasksDialog::PImpl
 {
+	bool IsFuture();
 	bool IsToday();
+	bool IsPast();
 
 	// ウインドウハンドル(共有メモリに保存する用)
 	std::unique_ptr<SharedHwnd> mSharedHwnd;
@@ -61,13 +64,33 @@ struct MyTasksDialog::PImpl
 	CString mNextSectionGuide;
 };
 
-// 当日か?
-bool MyTasksDialog::PImpl:: IsToday()
+// 表示中の日付は翌日以降か?
+bool MyTasksDialog::PImpl::IsFuture()
+{
+	CTime tmNow = CTime::GetCurrentTime();
+	return (mTimeCurrent > tmNow) &&
+	       (mTimeCurrent.GetYear() != tmNow.GetYear() ||
+	        mTimeCurrent.GetMonth() != tmNow.GetMonth() ||
+	        mTimeCurrent.GetDay() != tmNow.GetDay());
+}
+
+// 表示中の日付は当日か?
+bool MyTasksDialog::PImpl::IsToday()
 {
 	CTime tmNow = CTime::GetCurrentTime();
 	return mTimeCurrent.GetYear() == tmNow.GetYear() &&
 	       mTimeCurrent.GetMonth() == tmNow.GetMonth() &&
 	       mTimeCurrent.GetDay() == tmNow.GetDay();
+}
+
+// 表示中の日付は過去か?
+bool MyTasksDialog::PImpl::IsPast()
+{
+	CTime tmNow = CTime::GetCurrentTime();
+	return (mTimeCurrent < tmNow) &&
+	       (mTimeCurrent.GetYear() != tmNow.GetYear() ||
+	        mTimeCurrent.GetMonth() != tmNow.GetMonth() ||
+	        mTimeCurrent.GetDay() != tmNow.GetDay());
 }
 
 MyTasksDialog::MyTasksDialog(CWnd* pParent /*=nullptr*/)
@@ -106,6 +129,7 @@ BEGIN_MESSAGE_MAP(MyTasksDialog, CDialogEx)
 	ON_COMMAND(ID_TASK_ESTIMATEMANUALLY, OnTaskEstimateManually)
 	ON_COMMAND(ID_TASK_INTERRUPT, OnTaskInterrupt)
 	ON_COMMAND(ID_TASK_ADD, OnTaskAdd)
+	ON_UPDATE_COMMAND_UI(ID_TASK_ADD, OnUpdateTaskAdd)
 	ON_COMMAND(ID_DATE_TODAY, OnDateToday)
 	ON_COMMAND(ID_DATE_NEXT, OnDateNext)
 	ON_COMMAND(ID_DATE_PREV, OnDatePrev)
@@ -448,12 +472,29 @@ void MyTasksDialog::OnTaskInterrupt()
 {
 }
 
+// タスク追加ダイアログを表示
 void MyTasksDialog::OnTaskAdd()
 {
 	TaskEditDialog dlg;
 	if (dlg.DoModal() != IDOK) {
 		return;
 	}
+
+	TaskParam param;
+	dlg.GetParam(param);
+
+	auto repos = TaskRepository::Get();
+
+	auto task = repos->NewTask(param);
+
+	repos->Save();
+}
+
+void MyTasksDialog::OnUpdateTaskAdd(CCmdUI* cmdUI)
+{
+	// 過去の場合はタスク追加不可
+	// (追加できるのは当日か未来)
+	cmdUI->Enable(in->IsPast() == false);
 }
 
 void MyTasksDialog::OnDateToday()

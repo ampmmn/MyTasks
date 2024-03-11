@@ -53,6 +53,7 @@ protected:
 	afx_msg void OnTaskEstimateManually();
 	afx_msg void OnTaskInterrupt();
 	afx_msg void OnTaskAdd();
+	afx_msg void OnUpdateTaskAdd(CCmdUI* cmdUI);
 	afx_msg void OnDateToday();
 	afx_msg void OnDateNext();
 	afx_msg void OnDatePrev();

@@ -141,6 +141,9 @@
     <ClInclude Include="gui\TaskEditDialog.h">
       <Filter>gui</Filter>
     </ClInclude>
+    <ClInclude Include="core\TaskRepository.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -241,6 +244,9 @@
     </ClCompile>
     <ClCompile Include="gui\TaskEditDialog.cpp">
       <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="core\TaskRepository.cpp">
+      <Filter>core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
